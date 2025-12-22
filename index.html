@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DLL Music Playlist</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/player.css" />
+  <link rel="stylesheet" href="css/visualization.css" />
+</head>
+
+<body>
+
+  <!-- App Container -->
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <h1>Playlist</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+
+      <!-- Playlist Section -->
+      <section class="playlist-section">
+        <ul id="playlist" class="playlist">
+          <!-- Songs rendered by JS -->
+        </ul>
+      </section>
+
+      <!-- Now Playing Section -->
+      <section class="now-playing">
+        <div class="cover">
+          <img id="cover-image" alt="Song Cover" />
+        </div>
+
+        <div class="song-info">
+          <h2 id="song-title">Song Name</h2>
+          <p id="song-artist">Artist</p>
+        </div>
+
+        <!-- Player Controls -->
+        <div class="controls">
+          <button id="prev-btn">⏮</button>
+          <button id="play-btn">▶</button>
+          <button id="next-btn">⏭</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <input type="range" id="progress-bar" value="0" />
+      </section>
+
+      <!-- DLL Visualization -->
+      <section class="dll-visualization">
+        <h3>Doubly Linked List View</h3>
+        <div id="dll-nodes" class="dll-nodes">
+          <!-- Nodes rendered by JS -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Audio Element -->
+    <audio id="audio"></audio>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/sampleData.js"></script>
+  <script src="js/dll.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

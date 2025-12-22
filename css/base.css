@@ -1,0 +1,92 @@
+/* ================================
+   Base Reset & Theme Variables
+   Pink Pastel Theme
+================================ */
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* Root Theme Variables */
+:root {
+  /* Backgrounds */
+  --bg-main: #FBF6F9;        /* soft blush background */
+  --bg-panel: #FFFFFF;      /* cards / panels */
+  --bg-secondary: #F4EAF1;  /* subtle contrast */
+
+  /* Accents */
+  --accent-primary: #E8B7CC;    /* pastel pink */
+  --accent-secondary: #C3AED6;  /* lavender pink */
+  --accent-success: #BEE7E8;    /* mint aqua */
+  --accent-danger: #F3B0B0;     /* soft rose */
+
+  /* Text */
+  --text-primary: #3A2E39;      /* deep muted plum */
+  --text-secondary: #7A6C78;
+
+  /* Borders & Shadows */
+  --border-soft: #EAD5E2;
+  --shadow-soft: 0 10px 25px rgba(232, 183, 204, 0.35);
+
+  /* Animation */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.35s ease;
+}
+
+/* Body */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Buttons */
+button {
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: transform var(--transition-fast),
+              background var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+button:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Inputs */
+input[type="range"] {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  outline: none;
+}
+
+/* Remove default list styles */
+ul {
+  list-style: none;
+}
+
+/* Utility */
+.hidden {
+  display: none;
+}
