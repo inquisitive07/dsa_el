@@ -1,92 +1,85 @@
-/* ================================
-   Base Reset & Theme Variables
-   Pink Pastel Theme
-================================ */
-
-/* CSS Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-}
-
-/* Root Theme Variables */
 :root {
-  /* Backgrounds */
-  --bg-main: #FBF6F9;        /* soft blush background */
-  --bg-panel: #FFFFFF;      /* cards / panels */
-  --bg-secondary: #F4EAF1;  /* subtle contrast */
+  --bg-main: #FBF6F9;
+  --bg-panel: #FFFFFF;
+  --bg-secondary: #F4EAF1;
 
-  /* Accents */
-  --accent-primary: #E8B7CC;    /* pastel pink */
-  --accent-secondary: #C3AED6;  /* lavender pink */
-  --accent-success: #BEE7E8;    /* mint aqua */
-  --accent-danger: #F3B0B0;     /* soft rose */
+  --accent-primary: #E8B7CC;
+  --accent-secondary: #C3AED6;
 
-  /* Text */
-  --text-primary: #3A2E39;      /* deep muted plum */
+  --text-primary: #3A2E39;
   --text-secondary: #7A6C78;
 
-  /* Borders & Shadows */
-  --border-soft: #EAD5E2;
-  --shadow-soft: 0 10px 25px rgba(232, 183, 204, 0.35);
-
-  /* Animation */
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.35s ease;
+  --shadow-soft: 0 10px 25px rgba(232,183,204,0.35);
 }
 
-/* Body */
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
 body {
-  background-color: var(--bg-main);
+  background: var(--bg-main);
+  margin: 0;
   color: var(--text-primary);
-  min-height: 100vh;
 }
 
-/* Headings */
-h1, h2, h3 {
-  font-weight: 600;
-  letter-spacing: 0.3px;
+.hidden {
+  display: none;
 }
 
 /* Buttons */
-button {
-  background: var(--bg-secondary);
+.action-btn {
+  background: var(--accent-primary);
+  color: white;
   border: none;
-  border-radius: 14px;
-  padding: 10px 14px;
+  border-radius: 16px;
+  padding: 12px 22px;
   cursor: pointer;
-  color: var(--text-primary);
-  transition: transform var(--transition-fast),
-              background var(--transition-fast),
-              box-shadow var(--transition-fast);
+  box-shadow: 0 8px 20px rgba(232,183,204,0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-button:hover {
-  box-shadow: var(--shadow-soft);
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(232,183,204,0.6);
 }
 
-button:active {
-  transform: scale(0.96);
+.action-btn:active {
+  transform: scale(0.95);
+}
+.theory-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-/* Inputs */
-input[type="range"] {
-  width: 100%;
-  appearance: none;
-  height: 6px;
-  border-radius: 4px;
-  background: var(--border-soft);
-  outline: none;
+.theory-content {
+  background: #ffffff;
+  width: 600px;
+  max-width: 90%;
+  max-height: 80vh;
+  padding: 24px 28px;
+  border-radius: 20px;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  position: relative;
 }
 
-/* Remove default list styles */
-ul {
-  list-style: none;
+#close-theory {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 /* Utility */
 .hidden {
-  display: none;
+  display: none !important;
 }

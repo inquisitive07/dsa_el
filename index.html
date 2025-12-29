@@ -12,21 +12,15 @@
 </head>
 
 <body>
-
 <div class="app">
 
   <header class="header">
     <h1>DLL Music Playlist</h1>
-
-    <div class="top-actions">
-      <button id="toggle-dll">Toggle DLL View</button>
-      <button id="toggle-theory">Theory View</button>
-    </div>
+    <button id="toggle-theory" class="action-btn theory-btn">Theory View</button>
   </header>
 
   <div class="content">
-
-    <!-- Playlist Sidebar -->
+    <!-- Playlist -->
     <aside class="playlist-sidebar">
       <h2>Playlist</h2>
       <ul id="playlist"></ul>
@@ -35,7 +29,7 @@
     <!-- Player -->
     <main class="player-section">
       <div class="cover">
-        <img id="cover-image" alt="Cover">
+        <img id="cover-image" />
       </div>
 
       <h2 id="song-title"></h2>
@@ -53,6 +47,13 @@
         <span id="current-time">0:00</span>
         <span id="duration">0:00</span>
       </div>
+
+      <!-- DLL Toggle -->
+      <div class="dll-toggle-wrapper">
+        <button id="toggle-dll" class="action-btn">
+          Doubly Linked List View
+        </button>
+      </div>
     </main>
   </div>
 
@@ -62,40 +63,51 @@
     <div id="dll-nodes" class="dll-nodes"></div>
   </section>
 
-  <!-- Theory View -->
-  <section id="theory-panel" class="theory hidden">
-    <h3>Doubly Linked List – Theory</h3>
-    <textarea readonly>
-A Doubly Linked List is a linear data structure in which each node
-contains three parts: data, a pointer to the previous node, and
-a pointer to the next node.
-
-Advantages:
-- Bidirectional traversal
-- Efficient insertion and deletion
-- Suitable for navigation-based applications
-
-Disadvantages:
-- Extra memory for pointers
-- More complex pointer management
-
-Why suitable for music playlists:
-- Easy next and previous navigation
-- Dynamic reordering of songs
-- Natural mapping to playback behavior
-    </textarea>
-  </section>
-
-  <audio id="audio"></audio>
-
 </div>
+
+<!-- THEORY MODAL -->
+<div id="theory-modal" class="theory-modal hidden">
+  <div class="theory-content">
+    <button id="close-theory" aria-label="Close">✕</button>
+
+    <h2>Doubly Linked List – Theory</h2>
+
+    <h4>Definition</h4>
+    <p>
+      A doubly linked list is a linear data structure in which each node
+      contains data, a pointer to the previous node, and a pointer to the
+      next node.
+    </p>
+
+    <h4>Advantages</h4>
+    <ul>
+      <li>Bidirectional traversal</li>
+      <li>Efficient insertion and deletion</li>
+      <li>Suitable for navigation-based applications</li>
+    </ul>
+
+    <h4>Disadvantages</h4>
+    <ul>
+      <li>Extra memory overhead</li>
+      <li>More complex pointer handling</li>
+    </ul>
+
+    <h4>Why suitable for music playlists?</h4>
+    <p>
+      Music players require frequent next and previous navigation,
+      dynamic reordering, and real-time updates — all of which are
+      naturally supported by doubly linked lists.
+    </p>
+  </div>
+</div>
+
+
+<audio id="audio"></audio>
 
 <script src="js/sampleData.js"></script>
 <script src="js/dll.js"></script>
-<script src="js/storage.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/player.js"></script>
 <script src="js/app.js"></script>
-
 </body>
 </html>

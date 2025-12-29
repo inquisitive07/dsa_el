@@ -1,36 +1,101 @@
-const playlistDLL = new DoublyLinkedList();
+// ===============================
+// GLOBAL STATE
+// ===============================
+const dll = new DoublyLinkedList();
 let currentNode = null;
 
-/* Central state change function */
-function selectNode(node, autoPlay = true) {
+// ===============================
+// INITIALIZE PLAYLIST
+// ===============================
+function initializePlaylist() {
+  // Add songs to DLL
+  sampleSongs.forEach(song => dll.add(song));
+
+  // Set first song as current
+  currentNode = dll.head;
+
+  // Load first song (do NOT autoplay)
+  audio.src = currentNode.song.src;
+  audio.load();
+
+  // Initial UI render
+  updateUI(dll, currentNode);
+}
+
+// ===============================
+// CENTRAL NODE SELECTION FUNCTION
+// (single source of truth)
+// ===============================
+function selectNode(node) {
   if (!node) return;
 
   currentNode = node;
 
   audio.src = node.song.src;
   audio.load();
+  audio.play();
 
-  if (autoPlay) {
-    audio.play();
-    playBtn.textContent = "⏸";
+  playBtn.textContent = "⏸";
+  updateUI(dll, currentNode);
+}
+
+// ===============================
+// NAVIGATION CONTROLS
+// ===============================
+nextBtn.onclick = () => {
+  if (currentNode && currentNode.next) {
+    selectNode(currentNode.next);
+  }
+};
+
+prevBtn.onclick = () => {
+  if (currentNode && currentNode.prev) {
+    selectNode(currentNode.prev);
+  }
+};
+
+// ===============================
+// DLL VIEW TOGGLE
+// ===============================
+document.getElementById("toggle-dll").onclick = () => {
+  document
+    .querySelector(".dll-visualization")
+    .classList.toggle("hidden");
+};
+
+// ===============================
+// THEORY MODAL (SAFE + STABLE)
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  const theoryBtn = document.getElementById("toggle-theory");
+  const theoryModal = document.getElementById("theory-modal");
+  const closeTheory = document.getElementById("close-theory");
+
+  // Safety check (prevents crashes)
+  if (!theoryBtn || !theoryModal || !closeTheory) {
+    console.warn("Theory modal elements not found");
+    return;
   }
 
-  updateUI(playlistDLL, currentNode);
-}
+  // Open modal
+  theoryBtn.onclick = () => {
+    theoryModal.classList.remove("hidden");
+  };
 
-/* Initialize */
-function initializePlaylist() {
-  sampleSongs.forEach(song => playlistDLL.addToEnd(song));
-  selectNode(playlistDLL.head, false);
-}
+  // Close modal (X button)
+  closeTheory.onclick = () => {
+    theoryModal.classList.add("hidden");
+  };
 
+  // Close modal when clicking outside content
+  theoryModal.addEventListener("click", (e) => {
+    if (e.target === theoryModal) {
+      theoryModal.classList.add("hidden");
+    }
+  });
+});
+
+// ===============================
+// START APP
+// ===============================
 initializePlaylist();
-
-/* Toggle buttons */
-document.getElementById("toggle-dll").onclick = () => {
-  document.querySelector(".dll-visualization").classList.toggle("hidden");
-};
-
-document.getElementById("toggle-theory").onclick = () => {
-  document.getElementById("theory-panel").classList.toggle("hidden");
-};

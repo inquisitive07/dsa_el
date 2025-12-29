@@ -1,44 +1,25 @@
-/* ================================
-   Player Controls Styling
-================================ */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 16px 0;
+}
 
 .controls button {
   width: 48px;
   height: 48px;
-  font-size: 1.1rem;
-  background: var(--bg-secondary);
   border-radius: 50%;
-  box-shadow: var(--shadow-soft);
-}
-
-.controls button:hover {
-  background: var(--accent-primary);
-  color: white;
-}
-
-/* Play Button Emphasis */
-#play-btn {
-  background: var(--accent-primary);
-  color: white;
-}
-
-#play-btn:hover {
-  background: #dfa5bf;
-}
-
-/* Progress Bar Styling */
-#progress-bar {
-  appearance: none;
-  height: 6px;
-  border-radius: 6px;
-  background: var(--border-soft);
-}
-
-#progress-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  background: var(--accent-primary);
-  border-radius: 50%;
+  border: none;
   cursor: pointer;
+  background: var(--bg-secondary);
+}
+
+#progress-bar {
+  width: 100%;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
 }

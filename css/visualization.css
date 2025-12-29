@@ -1,3 +1,11 @@
+.dll-visualization {
+  margin-top: 30px;
+  background: var(--bg-panel);
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
 .dll-nodes {
   display: flex;
   align-items: center;
@@ -6,23 +14,22 @@
 }
 
 .dll-node {
-  padding: 12px;
-  border-radius: 14px;
+  padding: 12px 18px;
+  border-radius: 16px;
   background: var(--bg-secondary);
   min-width: 140px;
   text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .dll-node.active {
   background: var(--accent-primary);
   color: white;
+  transform: scale(1.08);
+  box-shadow: var(--shadow-soft);
 }
 
 .arrow {
   font-size: 1.4rem;
   color: var(--accent-secondary);
-}
-
-.hidden {
-  display: none;
 }

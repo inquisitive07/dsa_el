@@ -7,7 +7,6 @@ const progressBar = document.getElementById("progress-bar");
 const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 
-/* Play / Pause */
 playBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
@@ -18,26 +17,22 @@ playBtn.onclick = () => {
   }
 };
 
-/* Next */
 nextBtn.onclick = () => {
-  if (currentNode.next) {
+  if (currentNode && currentNode.next) {
     selectNode(currentNode.next);
   }
 };
 
-/* Previous */
 prevBtn.onclick = () => {
-  if (currentNode.prev) {
+  if (currentNode && currentNode.prev) {
     selectNode(currentNode.prev);
   }
 };
 
-/* Duration */
 audio.addEventListener("loadedmetadata", () => {
   durationEl.textContent = format(audio.duration);
 });
 
-/* Progress */
 audio.addEventListener("timeupdate", () => {
   progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
   currentTimeEl.textContent = format(audio.currentTime);

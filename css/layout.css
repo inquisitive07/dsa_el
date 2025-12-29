@@ -1,3 +1,14 @@
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .content {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -5,41 +16,42 @@
 }
 
 .playlist-sidebar {
-  background: var(--bg-panel);
+  background: white;
   padding: 16px;
   border-radius: 18px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 10px 25px rgba(232,183,204,0.35);
 }
 
 #playlist li {
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
 #playlist li.active {
-  background: var(--accent-primary);
+  background: #e8b7cc;
   color: white;
-  border-left: 5px solid #e18cb0;
 }
 
 .player-section {
-  background: var(--bg-panel);
+  background: white;
   padding: 24px;
   border-radius: 22px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 10px 25px rgba(232,183,204,0.35);
   text-align: center;
 }
 
-.time-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85rem;
+.cover img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
 }
 
-#toggle-theory {
-  position: fixed;
-  right: 20px;
-  top: 20px;
-  z-index: 1000;
+.dll-visualization {
+  margin-top: 30px;
+  background: white;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(232,183,204,0.35);
 }
