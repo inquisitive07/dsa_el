@@ -1,25 +1,32 @@
 const playlistDLL = new DoublyLinkedList();
 let currentNode = null;
 
-/* Initialize Playlist */
-function initializePlaylist() {
-  const stored = loadPlaylist();
-  const songs = stored || sampleSongs;
+/* Central state change function */
+function selectNode(node, autoPlay = true) {
+  if (!node) return;
 
-  songs.forEach(song => playlistDLL.addToEnd(song));
-  currentNode = playlistDLL.head;
-
-  updateUI(playlistDLL, currentNode);
-}
-
-/* Set Current Node */
-function setCurrentNode(node) {
   currentNode = node;
-  loadAndPlay();
+
+  audio.src = node.song.src;
+  audio.load();
+
+  if (autoPlay) {
+    audio.play();
+    playBtn.textContent = "⏸";
+  }
+
   updateUI(playlistDLL, currentNode);
 }
 
-/* Toggle Views */
+/* Initialize */
+function initializePlaylist() {
+  sampleSongs.forEach(song => playlistDLL.addToEnd(song));
+  selectNode(playlistDLL.head, false);
+}
+
+initializePlaylist();
+
+/* Toggle buttons */
 document.getElementById("toggle-dll").onclick = () => {
   document.querySelector(".dll-visualization").classList.toggle("hidden");
 };
@@ -27,5 +34,3 @@ document.getElementById("toggle-dll").onclick = () => {
 document.getElementById("toggle-theory").onclick = () => {
   document.getElementById("theory-panel").classList.toggle("hidden");
 };
-
-initializePlaylist();

@@ -12,12 +12,19 @@ function renderPlaylist(dll, current) {
   while (node) {
     const li = document.createElement("li");
     li.className = node === current ? "active" : "";
-    li.innerHTML = `<span>${node === current ? "▶" : ""}</span>${node.song.title}`;
-    li.onclick = () => setCurrentNode(node);
+
+    li.innerHTML = `
+      <span class="indicator">${node === current ? "▶" : ""}</span>
+      <span>${node.song.title}</span>
+    `;
+
+    li.onclick = () => selectNode(node);
     playlistEl.appendChild(li);
+
     node = node.next;
   }
 }
+
 
 function renderDLL(dll, current) {
   dllNodesEl.innerHTML = "";
@@ -27,12 +34,16 @@ function renderDLL(dll, current) {
     const box = document.createElement("div");
     box.className = "dll-node";
 
-    let label = "";
-    if (node === dll.head) label += "HEAD ";
-    if (node === dll.tail) label += "TAIL ";
-    if (node === current) label += "CURRENT";
+    let tags = [];
+    if (node === dll.head) tags.push("HEAD");
+    if (node === dll.tail) tags.push("TAIL");
+    if (node === current) tags.push("CURRENT");
 
-    box.innerHTML = `<strong>${node.song.title}</strong><small>${label}</small>`;
+    box.innerHTML = `
+      <strong>${node.song.title}</strong>
+      <small>${tags.join(" | ")}</small>
+    `;
+
     if (node === current) box.classList.add("active");
 
     dllNodesEl.appendChild(box);
@@ -47,6 +58,7 @@ function renderDLL(dll, current) {
     node = node.next;
   }
 }
+
 
 function updateNowPlaying(node) {
   coverImg.src = node.song.cover;
