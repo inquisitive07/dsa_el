@@ -1,7 +1,3 @@
-/* ======================================
-   UI Rendering & Visualization
-====================================== */
-
 const playlistEl = document.getElementById("playlist");
 const dllNodesEl = document.getElementById("dll-nodes");
 
@@ -9,55 +5,44 @@ const coverImg = document.getElementById("cover-image");
 const titleEl = document.getElementById("song-title");
 const artistEl = document.getElementById("song-artist");
 
-/* -------- Render Playlist List -------- */
+/* Render Playlist */
 function renderPlaylist(dll, currentNode) {
   playlistEl.innerHTML = "";
-
   let node = dll.head;
+
   while (node) {
     const li = document.createElement("li");
 
-    li.textContent = `${node.song.title} – ${node.song.artist}`;
+    li.innerHTML = `
+      <span>${node === currentNode ? "▶" : ""}</span>
+      <span>${node.song.title}</span>
+    `;
 
-    if (node === currentNode) {
-      li.classList.add("active");
-    }
+    if (node === currentNode) li.classList.add("active");
 
-    li.addEventListener("click", () => {
-      setCurrentNode(node);
-    });
-
+    li.onclick = () => setCurrentNode(node);
     playlistEl.appendChild(li);
     node = node.next;
   }
 }
 
-/* -------- Render DLL Visualization -------- */
+/* Render DLL Visualization */
 function renderDLLVisualization(dll, currentNode) {
   dllNodesEl.innerHTML = "";
-
   let node = dll.head;
+
   while (node) {
-    const nodeDiv = document.createElement("div");
-    nodeDiv.classList.add("dll-node");
+    const box = document.createElement("div");
+    box.className = "dll-node";
+    if (node === currentNode) box.classList.add("active");
 
-    if (node === currentNode) {
-      nodeDiv.classList.add("active");
-    }
-
-    nodeDiv.innerHTML = `
-      <div class="node-content">
-        <strong>${node.song.title}</strong>
-        <small>${node.song.artist}</small>
-      </div>
-    `;
-
-    dllNodesEl.appendChild(nodeDiv);
+    box.textContent = node.song.title;
+    dllNodesEl.appendChild(box);
 
     if (node.next) {
       const arrow = document.createElement("span");
-      arrow.classList.add("arrow");
-      arrow.textContent = "→";
+      arrow.className = "arrow";
+      arrow.textContent = "⇄";
       dllNodesEl.appendChild(arrow);
     }
 
@@ -65,16 +50,12 @@ function renderDLLVisualization(dll, currentNode) {
   }
 }
 
-/* -------- Update Now Playing Info -------- */
 function updateNowPlaying(node) {
-  if (!node) return;
-
+  coverImg.src = node.song.cover;
   titleEl.textContent = node.song.title;
   artistEl.textContent = node.song.artist;
-  coverImg.src = node.song.cover;
 }
 
-/* -------- Central UI Update -------- */
 function updateUI(dll, currentNode) {
   renderPlaylist(dll, currentNode);
   renderDLLVisualization(dll, currentNode);

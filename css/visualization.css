@@ -1,54 +1,26 @@
-/* ================================
-   Doubly Linked List Visualization
-================================ */
-
-/* Node Container */
 .dll-nodes {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px;
+  gap: 16px;
+  overflow-x: auto;
 }
 
-/* Individual Node */
 .dll-node {
-  background: var(--bg-panel);
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: var(--bg-secondary);
   border: 2px solid var(--border-soft);
-  border-radius: 16px;
-  padding: 10px 14px;
-  min-width: 140px;
+  min-width: 120px;
   text-align: center;
-  transition: transform var(--transition-medium),
-              box-shadow var(--transition-medium),
-              border-color var(--transition-medium);
 }
 
-/* Node Content */
-.node-content strong {
-  display: block;
-  font-size: 0.85rem;
-}
-
-.node-content small {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-
-/* Active Node */
 .dll-node.active {
-  border-color: var(--accent-primary);
-  box-shadow: 0 10px 22px rgba(232, 183, 204, 0.55);
-  transform: scale(1.05);
-}
-
-/* Arrow Between Nodes */
-.arrow {
-  font-size: 1.2rem;
-  color: var(--accent-secondary);
-  user-select: none;
-}
-
-/* Hover Effect (Optional but Nice) */
-.dll-node:hover {
+  background: var(--accent-primary);
+  color: white;
   box-shadow: var(--shadow-soft);
+}
+
+.arrow {
+  font-size: 1.4rem;
+  color: var(--accent-secondary);
 }
