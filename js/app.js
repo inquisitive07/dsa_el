@@ -43,16 +43,13 @@ function selectNode(node) {
 // NAVIGATION CONTROLS
 // ===============================
 nextBtn.onclick = () => {
-  if (currentNode && currentNode.next) {
-    selectNode(currentNode.next);
-  }
+  selectNode(currentNode.next);
 };
 
 prevBtn.onclick = () => {
-  if (currentNode && currentNode.prev) {
-    selectNode(currentNode.prev);
-  }
+  selectNode(currentNode.prev);
 };
+
 
 // ===============================
 // DLL VIEW TOGGLE
