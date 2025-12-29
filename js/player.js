@@ -1,82 +1,64 @@
-/* ======================================
-   Audio Player Logic
-====================================== */
-
 const audio = document.getElementById("audio");
-
 const playBtn = document.getElementById("play-btn");
 const nextBtn = document.getElementById("next-btn");
 const prevBtn = document.getElementById("prev-btn");
 const progressBar = document.getElementById("progress-bar");
 
-let isPlaying = false;
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
 
-/* -------- Play Current Song -------- */
-function playCurrentSong() {
-  if (!currentNode) return;
-
+function loadAndPlay() {
   audio.src = currentNode.song.src;
   audio.play();
-  isPlaying = true;
   playBtn.textContent = "⏸";
 }
 
-/* -------- Toggle Play / Pause -------- */
 function togglePlay() {
-  if (!currentNode) return;
-
-  if (isPlaying) {
-    audio.pause();
-    playBtn.textContent = "▶";
-  } else {
+  if (!audio.src) loadAndPlay();
+  else if (audio.paused) {
     audio.play();
     playBtn.textContent = "⏸";
-  }
-
-  isPlaying = !isPlaying;
-}
-
-/* -------- Play Next Song -------- */
-function playNext() {
-  if (!currentNode || !currentNode.next) return;
-
-  currentNode = currentNode.next;
-  playCurrentSong();
-  updateUI(playlistDLL, currentNode);
-}
-
-/* -------- Play Previous Song -------- */
-function playPrevious() {
-  if (!currentNode || !currentNode.prev) return;
-
-  currentNode = currentNode.prev;
-  playCurrentSong();
-  updateUI(playlistDLL, currentNode);
-}
-
-/* -------- Update Progress Bar -------- */
-audio.addEventListener("timeupdate", () => {
-  if (!audio.duration) return;
-  progressBar.value = (audio.currentTime / audio.duration) * 100;
-});
-
-/* -------- Seek Audio -------- */
-progressBar.addEventListener("input", () => {
-  if (!audio.duration) return;
-  audio.currentTime = (progressBar.value / 100) * audio.duration;
-});
-
-/* -------- Auto Play Next on End -------- */
-audio.addEventListener("ended", () => {
-  if (currentNode && currentNode.next) {
-    playNext();
   } else {
-    isPlaying = false;
+    audio.pause();
     playBtn.textContent = "▶";
   }
+}
+
+function playNext() {
+  if (currentNode.next) {
+    currentNode = currentNode.next;
+    loadAndPlay();
+    updateUI(playlistDLL, currentNode);
+  }
+}
+
+function playPrev() {
+  if (currentNode.prev) {
+    currentNode = currentNode.prev;
+    loadAndPlay();
+    updateUI(playlistDLL, currentNode);
+  }
+}
+
+audio.addEventListener("loadedmetadata", () => {
+  durationEl.textContent = format(audio.duration);
 });
 
-/* -------- Button Event Listeners -------- */
-playBtn.addEventListener("click", togglePlay);
-nextBtn.addEventListener("click", playNext);
-prevBtn.addEventListener("click", playPrevious);
+audio.addEventListener("timeupdate", () => {
+  progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+  currentTimeEl.textContent = format(audio.currentTime);
+});
+
+progressBar.oninput = () => {
+  audio.currentTime = (progressBar.value / 100) * audio.duration;
+};
+
+playBtn.onclick = togglePlay;
+nextBtn.onclick = playNext;
+prevBtn.onclick = playPrev;
+
+function format(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}

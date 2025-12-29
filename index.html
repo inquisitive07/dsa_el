@@ -5,7 +5,6 @@
   <title>DLL Music Playlist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/player.css" />
@@ -16,12 +15,15 @@
 
 <div class="app">
 
-  <!-- Header -->
   <header class="header">
     <h1>DLL Music Playlist</h1>
+
+    <div class="top-actions">
+      <button id="toggle-dll">Toggle DLL View</button>
+      <button id="toggle-theory">Theory View</button>
+    </div>
   </header>
 
-  <!-- Main Desktop Layout -->
   <div class="content">
 
     <!-- Playlist Sidebar -->
@@ -30,14 +32,14 @@
       <ul id="playlist"></ul>
     </aside>
 
-    <!-- Now Playing -->
+    <!-- Player -->
     <main class="player-section">
       <div class="cover">
-        <img id="cover-image" alt="Song Cover">
+        <img id="cover-image" alt="Cover">
       </div>
 
-      <h2 id="song-title">Song Name</h2>
-      <p id="song-artist">Artist</p>
+      <h2 id="song-title"></h2>
+      <p id="song-artist"></p>
 
       <div class="controls">
         <button id="prev-btn">⏮</button>
@@ -46,21 +48,48 @@
       </div>
 
       <input type="range" id="progress-bar" value="0">
-    </main>
 
+      <div class="time-info">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+    </main>
   </div>
 
   <!-- DLL Visualization -->
-  <section class="dll-visualization">
+  <section class="dll-visualization hidden">
     <h3>Doubly Linked List Visualization</h3>
     <div id="dll-nodes" class="dll-nodes"></div>
+  </section>
+
+  <!-- Theory View -->
+  <section id="theory-panel" class="theory hidden">
+    <h3>Doubly Linked List – Theory</h3>
+    <textarea readonly>
+A Doubly Linked List is a linear data structure in which each node
+contains three parts: data, a pointer to the previous node, and
+a pointer to the next node.
+
+Advantages:
+- Bidirectional traversal
+- Efficient insertion and deletion
+- Suitable for navigation-based applications
+
+Disadvantages:
+- Extra memory for pointers
+- More complex pointer management
+
+Why suitable for music playlists:
+- Easy next and previous navigation
+- Dynamic reordering of songs
+- Natural mapping to playback behavior
+    </textarea>
   </section>
 
   <audio id="audio"></audio>
 
 </div>
 
-<!-- JS -->
 <script src="js/sampleData.js"></script>
 <script src="js/dll.js"></script>
 <script src="js/storage.js"></script>

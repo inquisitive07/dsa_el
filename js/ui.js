@@ -5,38 +5,36 @@ const coverImg = document.getElementById("cover-image");
 const titleEl = document.getElementById("song-title");
 const artistEl = document.getElementById("song-artist");
 
-/* Render Playlist */
-function renderPlaylist(dll, currentNode) {
+function renderPlaylist(dll, current) {
   playlistEl.innerHTML = "";
   let node = dll.head;
 
   while (node) {
     const li = document.createElement("li");
-
-    li.innerHTML = `
-      <span>${node === currentNode ? "▶" : ""}</span>
-      <span>${node.song.title}</span>
-    `;
-
-    if (node === currentNode) li.classList.add("active");
-
+    li.className = node === current ? "active" : "";
+    li.innerHTML = `<span>${node === current ? "▶" : ""}</span>${node.song.title}`;
     li.onclick = () => setCurrentNode(node);
     playlistEl.appendChild(li);
     node = node.next;
   }
 }
 
-/* Render DLL Visualization */
-function renderDLLVisualization(dll, currentNode) {
+function renderDLL(dll, current) {
   dllNodesEl.innerHTML = "";
   let node = dll.head;
 
   while (node) {
     const box = document.createElement("div");
     box.className = "dll-node";
-    if (node === currentNode) box.classList.add("active");
 
-    box.textContent = node.song.title;
+    let label = "";
+    if (node === dll.head) label += "HEAD ";
+    if (node === dll.tail) label += "TAIL ";
+    if (node === current) label += "CURRENT";
+
+    box.innerHTML = `<strong>${node.song.title}</strong><small>${label}</small>`;
+    if (node === current) box.classList.add("active");
+
     dllNodesEl.appendChild(box);
 
     if (node.next) {
@@ -56,8 +54,8 @@ function updateNowPlaying(node) {
   artistEl.textContent = node.song.artist;
 }
 
-function updateUI(dll, currentNode) {
-  renderPlaylist(dll, currentNode);
-  renderDLLVisualization(dll, currentNode);
-  updateNowPlaying(currentNode);
+function updateUI(dll, current) {
+  renderPlaylist(dll, current);
+  renderDLL(dll, current);
+  updateNowPlaying(current);
 }

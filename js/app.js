@@ -1,37 +1,31 @@
-/* ======================================
-   Application Entry Point
-====================================== */
-
-/* -------- Global Playlist State -------- */
 const playlistDLL = new DoublyLinkedList();
 let currentNode = null;
 
-/* -------- Initialize Playlist -------- */
+/* Initialize Playlist */
 function initializePlaylist() {
-  // Try loading from LocalStorage first
-  const storedSongs = loadPlaylist();
+  const stored = loadPlaylist();
+  const songs = stored || sampleSongs;
 
-  const songsToLoad = storedSongs || sampleSongs;
-
-  songsToLoad.forEach(song => {
-    playlistDLL.addToEnd(song);
-  });
-
+  songs.forEach(song => playlistDLL.addToEnd(song));
   currentNode = playlistDLL.head;
+
   updateUI(playlistDLL, currentNode);
 }
 
-/* -------- Set Current Node -------- */
+/* Set Current Node */
 function setCurrentNode(node) {
   currentNode = node;
-  playCurrentSong();
+  loadAndPlay();
   updateUI(playlistDLL, currentNode);
 }
 
-/* -------- Save Playlist State -------- */
-function persistPlaylist() {
-  savePlaylist(playlistDLL);
-}
+/* Toggle Views */
+document.getElementById("toggle-dll").onclick = () => {
+  document.querySelector(".dll-visualization").classList.toggle("hidden");
+};
 
-/* -------- App Start -------- */
+document.getElementById("toggle-theory").onclick = () => {
+  document.getElementById("theory-panel").classList.toggle("hidden");
+};
+
 initializePlaylist();
