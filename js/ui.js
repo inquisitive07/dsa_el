@@ -29,6 +29,11 @@ function renderPlaylist(dll, current) {
     if (node === current) {
       li.classList.add("active");
       li.prepend(document.createTextNode("▶ "));
+      
+      // Animate active item if animations are available
+      if (window.musicPlayerAnimations) {
+        window.musicPlayerAnimations.animatePlaylistItem(li);
+      }
     }
 
     li.onclick = () => selectNode(node);
@@ -38,6 +43,13 @@ function renderPlaylist(dll, current) {
     node = node.next;
     first = false;
   } while (node !== dll.head);
+  
+  // Scroll to active song if animations are available
+  if (window.musicPlayerAnimations) {
+    setTimeout(() => {
+      window.musicPlayerAnimations.scrollToActiveSong();
+    }, 100);
+  }
 }
 
 // ===============================

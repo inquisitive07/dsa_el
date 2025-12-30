@@ -58,6 +58,20 @@ prevBtn.onclick = () => {
 function deleteSong() {
   if (!currentNode) return;
   
+  // Create particles at delete button
+  const deleteBtn = document.getElementById('delete-btn');
+  if (deleteBtn && window.microInteractions) {
+    const rect = deleteBtn.getBoundingClientRect();
+    window.microInteractions.createParticles(
+      rect.left + rect.width / 2,
+      rect.top + rect.height / 2,
+      12
+    );
+  }
+  
+  // Get the current playlist item for animation
+  const activeItem = document.querySelector('#playlist li.active');
+  
   // Get safe next node before deletion
   const safeNext = dll.delete(currentNode);
   
@@ -77,8 +91,14 @@ function deleteSong() {
     playBtn.textContent = "⏸";
   }
   
-  // Update UI
-  updateUI(dll, currentNode);
+  // Animate removal then update UI
+  if (activeItem && window.microInteractions) {
+    window.microInteractions.animateRemoveItem(activeItem, () => {
+      updateUI(dll, currentNode);
+    });
+  } else {
+    updateUI(dll, currentNode);
+  }
 }
 
 // ===============================
@@ -104,7 +124,21 @@ function addSongFromPool() {
 // Called from UI when a song is selected
 function addSelectedSong(song) {
   dll.add(song);
+  
+  // Trigger success feedback on add button
+  const addBtn = document.getElementById('add-song-btn');
+  if (addBtn && window.microInteractions) {
+    window.microInteractions.triggerSuccess(addBtn);
+  }
+  
   updateUI(dll, currentNode);
+  
+  // Scroll to newly added song
+  setTimeout(() => {
+    if (window.microInteractions) {
+      window.microInteractions.scrollToActive();
+    }
+  }, 100);
 }
 
 // ===============================
