@@ -22,13 +22,17 @@ playBtn.onclick = () => {
 
 nextBtn.onclick = () => {
   if (currentNode && currentNode.next) {
-    selectNode(currentNode.next);
+    if (window.selectNode && typeof window.selectNode === 'function') {
+      window.selectNode(currentNode.next);
+    }
   }
 };
 
 prevBtn.onclick = () => {
   if (currentNode && currentNode.prev) {
-    selectNode(currentNode.prev);
+    if (window.selectNode && typeof window.selectNode === 'function') {
+      window.selectNode(currentNode.prev);
+    }
   }
 };
 
@@ -57,6 +61,8 @@ function format(sec) {
 audio.addEventListener("ended", () => {
   // When song finishes, play next song (circular behavior)
   if (currentNode && currentNode.next) {
-    selectNode(currentNode.next);
+    if (window.selectNode && typeof window.selectNode === 'function') {
+      window.selectNode(currentNode.next);
+    }
   }
 });

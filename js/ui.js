@@ -24,9 +24,10 @@ function renderPlaylist(dll, current) {
 
   do {
     const li = document.createElement("li");
-    li.textContent = node.song.title;
+    const currentSongNode = node; // Capture in closure
+    li.textContent = currentSongNode.song.title;
 
-    if (node === current) {
+    if (currentSongNode === current) {
       li.classList.add("active");
       li.prepend(document.createTextNode("▶ "));
       
@@ -36,7 +37,11 @@ function renderPlaylist(dll, current) {
       }
     }
 
-    li.onclick = () => selectNode(node);
+    li.onclick = () => {
+      if (window.selectNode && typeof window.selectNode === 'function') {
+        window.selectNode(currentSongNode);
+      }
+    };
 
     playlistEl.appendChild(li);
 
