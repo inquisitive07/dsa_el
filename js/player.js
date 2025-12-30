@@ -47,3 +47,13 @@ function format(sec) {
   const s = Math.floor(sec % 60).toString().padStart(2, "0");
   return `${m}:${s}`;
 }
+
+// ===============================
+// AUTO-PLAY NEXT SONG
+// ===============================
+audio.addEventListener("ended", () => {
+  // When song finishes, play next song (circular behavior)
+  if (currentNode && currentNode.next) {
+    selectNode(currentNode.next);
+  }
+});

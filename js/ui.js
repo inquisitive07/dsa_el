@@ -116,3 +116,51 @@ function updateUI(dll, current) {
   updatePointers(dll, current);
   updateNowPlaying(current);
 }
+
+// ===============================
+// ADD SONG MODAL
+// ===============================
+function showAddSongModal(availableSongs) {
+  const modal = document.getElementById("add-song-modal");
+  const poolList = document.getElementById("song-pool-list");
+  
+  // Clear previous content
+  poolList.innerHTML = "";
+  
+  // Create song buttons
+  availableSongs.forEach(song => {
+    const songBtn = document.createElement("button");
+    songBtn.className = "action-btn";
+    songBtn.style.width = "100%";
+    songBtn.style.marginBottom = "8px";
+    songBtn.textContent = `${song.title} - ${song.artist}`;
+    
+    songBtn.onclick = () => {
+      addSelectedSong(song);
+      modal.classList.add("hidden");
+    };
+    
+    poolList.appendChild(songBtn);
+  });
+  
+  // Show modal
+  modal.classList.remove("hidden");
+}
+
+// ===============================
+// SHUFFLE BUTTON STATE UPDATE
+// ===============================
+function updateShuffleButton(isOn) {
+  const shuffleBtn = document.getElementById("shuffle-btn");
+  if (!shuffleBtn) return;
+  
+  if (isOn) {
+    shuffleBtn.style.opacity = "1";
+    shuffleBtn.style.transform = "scale(1.1)";
+    shuffleBtn.title = "Shuffle ON - Click to turn off";
+  } else {
+    shuffleBtn.style.opacity = "0.6";
+    shuffleBtn.style.transform = "scale(1)";
+    shuffleBtn.title = "Shuffle OFF - Click to shuffle";
+  }
+}

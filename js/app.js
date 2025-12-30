@@ -3,13 +3,15 @@
 // ===============================
 const dll = new DoublyLinkedList();
 let currentNode = null;
+let isShuffleOn = false; // Shuffle mode state
+let originalOrder = []; // Store original order before shuffle
 
 // ===============================
 // INITIALIZE PLAYLIST
 // ===============================
 function initializePlaylist() {
-  // Add songs to DLL
-  sampleSongs.forEach(song => dll.add(song));
+  // Add first 2 songs to DLL initially
+  sampleSongs.slice(0, 2).forEach(song => dll.add(song));
 
   // Set first song as current
   currentNode = dll.head;
@@ -49,6 +51,128 @@ nextBtn.onclick = () => {
 prevBtn.onclick = () => {
   selectNode(currentNode.prev);
 };
+
+// ===============================
+// DELETE CURRENT SONG
+// ===============================
+function deleteSong() {
+  if (!currentNode) return;
+  
+  // Get safe next node before deletion
+  const safeNext = dll.delete(currentNode);
+  
+  // Update current pointer
+  currentNode = safeNext;
+  
+  // If list is empty, stop audio
+  if (!currentNode) {
+    audio.pause();
+    audio.src = "";
+    playBtn.textContent = "▶";
+  } else {
+    // Load and play the safe next song
+    audio.src = currentNode.song.src;
+    audio.load();
+    audio.play();
+    playBtn.textContent = "⏸";
+  }
+  
+  // Update UI
+  updateUI(dll, currentNode);
+}
+
+// ===============================
+// ADD SONG FROM POOL
+// ===============================
+function addSongFromPool() {
+  // Get currently added songs
+  const currentSongs = dll.toArray();
+  const currentTitles = currentSongs.map(s => s.title);
+  
+  // Find songs not yet added
+  const availableSongs = sampleSongs.filter(s => !currentTitles.includes(s.title));
+  
+  if (availableSongs.length === 0) {
+    alert("All songs from the pool have been added!");
+    return;
+  }
+  
+  // Show selection modal (will create modal in UI)
+  showAddSongModal(availableSongs);
+}
+
+// Called from UI when a song is selected
+function addSelectedSong(song) {
+  dll.add(song);
+  updateUI(dll, currentNode);
+}
+
+// ===============================
+// SHUFFLE FUNCTIONALITY
+// ===============================
+function toggleShuffle() {
+  isShuffleOn = !isShuffleOn;
+  
+  if (isShuffleOn) {
+    // Save current song to preserve it
+    const currentSongTitle = currentNode ? currentNode.song.title : null;
+    
+    // Save original order
+    originalOrder = dll.toArray();
+    
+    // Convert to array, shuffle, rebuild
+    const songs = dll.toArray();
+    const shuffled = fisherYatesShuffle(songs);
+    dll.fromArray(shuffled);
+    
+    // Find and set current node to the same song
+    if (currentSongTitle) {
+      let node = dll.head;
+      do {
+        if (node.song.title === currentSongTitle) {
+          currentNode = node;
+          break;
+        }
+        node = node.next;
+      } while (node !== dll.head);
+    } else {
+      currentNode = dll.head;
+    }
+  } else {
+    // Restore original order
+    const currentSongTitle = currentNode ? currentNode.song.title : null;
+    
+    dll.fromArray(originalOrder);
+    
+    // Find and set current node
+    if (currentSongTitle) {
+      let node = dll.head;
+      do {
+        if (node.song.title === currentSongTitle) {
+          currentNode = node;
+          break;
+        }
+        node = node.next;
+      } while (node !== dll.head);
+    } else {
+      currentNode = dll.head;
+    }
+  }
+  
+  // Update UI with shuffle state
+  updateUI(dll, currentNode);
+  updateShuffleButton(isShuffleOn);
+}
+
+// Fisher-Yates shuffle algorithm
+function fisherYatesShuffle(array) {
+  const arr = [...array]; // Create a copy
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 
 // ===============================
@@ -90,6 +214,53 @@ document.addEventListener("DOMContentLoaded", () => {
       theoryModal.classList.add("hidden");
     }
   });
+  
+  // ===============================
+  // ADD SONG MODAL HANDLERS
+  // ===============================
+  const addSongBtn = document.getElementById("add-song-btn");
+  const addSongModal = document.getElementById("add-song-modal");
+  const closeAddModal = document.getElementById("close-add-modal");
+  
+  if (addSongBtn) {
+    addSongBtn.onclick = () => addSongFromPool();
+  }
+  
+  if (closeAddModal) {
+    closeAddModal.onclick = () => {
+      addSongModal.classList.add("hidden");
+    };
+  }
+  
+  if (addSongModal) {
+    addSongModal.addEventListener("click", (e) => {
+      if (e.target === addSongModal) {
+        addSongModal.classList.add("hidden");
+      }
+    });
+  }
+  
+  // ===============================
+  // SHUFFLE BUTTON HANDLER
+  // ===============================
+  const shuffleBtn = document.getElementById("shuffle-btn");
+  if (shuffleBtn) {
+    shuffleBtn.onclick = () => toggleShuffle();
+    // Initialize shuffle button state
+    updateShuffleButton(false);
+  }
+  
+  // ===============================
+  // DELETE BUTTON HANDLER
+  // ===============================
+  const deleteBtn = document.getElementById("delete-btn");
+  if (deleteBtn) {
+    deleteBtn.onclick = () => {
+      if (confirm("Delete current song from playlist?")) {
+        deleteSong();
+      }
+    };
+  }
 });
 
 // ===============================

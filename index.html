@@ -25,6 +25,7 @@
     <!-- Playlist -->
     <aside class="playlist-sidebar">
       <h2>Playlist</h2>
+      <button id="add-song-btn" class="action-btn" style="width: 100%; margin-bottom: 12px;">+ Add Song</button>
       <ul id="playlist"></ul>
     </aside>
 
@@ -38,9 +39,11 @@
       <p id="song-artist"></p>
 
       <div class="controls">
+        <button id="shuffle-btn" title="Shuffle">🔀</button>
         <button id="prev-btn">⏮</button>
         <button id="play-btn">▶</button>
         <button id="next-btn">⏭</button>
+        <button id="delete-btn" class="danger-btn" title="Delete Song">🗑️</button>
       </div>
 
       <input type="range" id="progress-bar" value="0">
@@ -100,6 +103,15 @@
       dynamic reordering, and real-time updates — all of which are
       naturally supported by doubly linked lists.
     </p>
+  </div>
+</div>
+
+<!-- ADD SONG MODAL -->
+<div id="add-song-modal" class="theory-modal hidden">
+  <div class="theory-content">
+    <button id="close-add-modal" aria-label="Close">✕</button>
+    <h2>Add Song from Pool</h2>
+    <div id="song-pool-list"></div>
   </div>
 </div>
 

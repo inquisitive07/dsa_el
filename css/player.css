@@ -1,6 +1,7 @@
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 14px;
   margin: 16px 0;
 }
@@ -16,10 +17,26 @@
   color: white;
   font-size: 18px;
   font-weight: 500; /* Medium for buttons */
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Shuffle button specific styling */
+#shuffle-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+/* Delete button specific styling */
+#delete-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+  background: var(--red-accent);
 }
 
 /* Hover: darker blue + shadow */
@@ -28,10 +45,20 @@
   box-shadow: var(--shadow-hover);
 }
 
+/* Delete button hover */
+#delete-btn:hover {
+  background: #850418;
+}
+
 /* Active: scale 1.05 */
 .controls button:active {
   transform: scale(1.05);
   background: #1F7A99;
+}
+
+/* Delete button active */
+#delete-btn:active {
+  background: #6E0314;
 }
 
 /* Progress bar - Blaze Orange track, Orange Yellow fill */
