@@ -288,14 +288,65 @@ document.addEventListener("DOMContentLoaded", () => {
   // DELETE BUTTON HANDLER
   // ===============================
   const deleteBtn = document.getElementById("delete-btn");
-  if (deleteBtn) {
+  const deleteModal = document.getElementById("delete-modal");
+  const cancelDeleteBtn = document.getElementById("cancel-delete");
+  const confirmDeleteBtn = document.getElementById("confirm-delete");
+  const deleteSongName = document.getElementById("delete-song-name");
+  
+  if (deleteBtn && deleteModal) {
     deleteBtn.onclick = () => {
-      if (confirm("Delete current song from playlist?")) {
-        deleteSong();
-      }
+      // Show modal with current song name
+      const songTitle = currentNode ? currentNode.song.title : 'this song';
+      deleteSongName.textContent = `Are you sure you want to delete "${songTitle}" from the playlist?`;
+      deleteModal.classList.remove("hidden");
     };
+    
+    // Cancel button
+    if (cancelDeleteBtn) {
+      cancelDeleteBtn.onclick = () => {
+        deleteModal.classList.add("hidden");
+      };
+    }
+    
+    // Confirm delete button
+    if (confirmDeleteBtn) {
+      confirmDeleteBtn.onclick = () => {
+        const songTitle = currentNode ? currentNode.song.title : 'Song';
+        deleteSong();
+        deleteModal.classList.add("hidden");
+        // Show "Song Deleted" popup notification
+        showDeletedNotification(songTitle);
+      };
+    }
   }
 });
+
+// ===============================
+// SONG DELETED NOTIFICATION
+// ===============================
+function showDeletedNotification(songTitle) {
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = 'deleted-notification';
+  notification.innerHTML = `
+    <div class="notification-content">
+      <span class="notification-icon">✓</span>
+      <span class="notification-text">Song Deleted</span>
+    </div>
+  `;
+  
+  // Add to body
+  document.body.appendChild(notification);
+  
+  // Show with animation
+  setTimeout(() => notification.classList.add('show'), 10);
+  
+  // Remove after 2.5 seconds
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 2500);
+}
 
 // ===============================
 // START APP

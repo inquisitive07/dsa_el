@@ -207,104 +207,402 @@
   animation: fadeInUp 0.7s var(--easing-smooth) 0.3s backwards;
 }
 
+/* Base button styles with gradient backgrounds */
 .controls button {
   position: relative;
-  overflow: hidden;
-  transition: all 0.25s var(--easing-smooth);
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  backdrop-filter: blur(10px);
+  will-change: transform;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
 }
 
-/* Play button with breathing animation */
-#play-btn {
+/* SVG icon styling */
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+  transition: all 0.3s var(--easing-smooth);
   position: relative;
-  background: var(--primary);
-  animation: breathe 2s ease-in-out infinite;
+  z-index: 2;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Ripple effect on all buttons */
+.controls button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.controls button:active::before {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: width 0.2s ease-out, height 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+/* Glow effect overlay */
+.controls button::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s var(--easing-smooth);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.controls button:hover::after {
+  opacity: 1;
+}
+
+/* Base hover state */
+.controls button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+}
+
+/* Pressed state - tactile feedback */
+.controls button:active {
+  transform: translateY(-1px) scale(0.95);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+  transition: all 0.1s var(--easing-smooth);
+}
+
+/* Focus state for accessibility */
+.controls button:focus-visible {
+  outline: 3px solid rgba(255, 107, 53, 0.5);
+  outline-offset: 3px;
+}
+
+/* ========== PLAY BUTTON - HERO ELEMENT ========== */
+#play-btn {
+  width: 68px;
+  height: 68px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4), 0 0 0 0 rgba(255, 107, 53, 0.7);
+  animation: breathe 2.5s ease-in-out infinite;
+  z-index: 10;
+}
+
+#play-btn .btn-icon {
+  width: 26px;
+  height: 26px;
 }
 
 @keyframes breathe {
   0%, 100% { 
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4), 0 0 0 0 rgba(255, 107, 53, 0.7);
   }
   50% { 
-    transform: scale(1.05);
-    box-shadow: 0 0 0 12px rgba(255, 107, 53, 0);
+    box-shadow: 0 8px 28px rgba(255, 107, 53, 0.6), 0 0 0 12px rgba(255, 107, 53, 0);
   }
-}
-
-#play-btn.playing {
-  animation: none;
-  background: var(--accent);
 }
 
 #play-btn:hover {
-  background: var(--secondary);
-  transform: scale(1.12);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 12px 32px rgba(255, 107, 53, 0.6), 0 0 30px rgba(255, 107, 53, 0.4);
+  animation: none;
+}
+
+#play-btn:hover .btn-icon {
+  transform: scale(1.1);
 }
 
 #play-btn:active {
-  transform: scale(0.95);
-  transition: transform 0.1s var(--easing-smooth);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.5);
 }
 
-/* Button press effect */
-.controls button:active {
-  transform: scale(0.92);
+/* Playing state */
+#play-btn.playing {
+  animation: none;
+  background: linear-gradient(135deg, var(--accent) 0%, #c62937 100%);
+  box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
 }
 
-/* Shuffle button rotation */
+#play-btn.playing:hover {
+  box-shadow: 0 12px 32px rgba(230, 57, 70, 0.6), 0 0 30px rgba(230, 57, 70, 0.4);
+}
+
+/* Icon morph animation */
+.play-icon,
+.pause-icon {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#play-btn.playing .play-icon {
+  display: none;
+}
+
+#play-btn.playing .pause-icon {
+  display: block !important;
+}
+
+/* ========== SHUFFLE BUTTON ========== */
 #shuffle-btn {
-  transition: all 0.4s var(--easing-bounce);
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2c9fc7 0%, #1e7a9c 100%);
+  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+  opacity: 0.85;
 }
 
-#shuffle-btn.active {
-  background: var(--secondary);
-  transform: rotate(180deg) scale(1.1);
+#shuffle-btn .btn-icon {
+  width: 18px;
+  height: 18px;
 }
 
 #shuffle-btn:hover {
-  transform: rotate(15deg) scale(1.05);
+  opacity: 1;
+  background: linear-gradient(135deg, #3db3dc 0%, #2c9fc7 100%);
+  box-shadow: 0 8px 24px rgba(44, 159, 199, 0.5), 0 0 20px rgba(44, 159, 199, 0.3);
+  transform: translateY(-3px) scale(1.05) rotate(15deg);
 }
 
-/* Delete button shake on hover */
+#shuffle-btn:hover .btn-icon {
+  transform: rotate(-15deg);
+}
+
+#shuffle-btn:active {
+  transform: translateY(-1px) scale(0.95) rotate(0deg);
+}
+
+/* Shuffle active state */
+#shuffle-btn.active {
+  opacity: 1;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.5);
+  animation: shuffleActive 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes shuffleActive {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-180deg) scale(1.15); }
+  75% { transform: rotate(-360deg) scale(1.15); }
+}
+
+#shuffle-btn.active .btn-icon {
+  animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ========== PREVIOUS/NEXT BUTTONS ========== */
+#prev-btn,
+#next-btn {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%);
+  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+}
+
+#prev-btn .btn-icon,
+#next-btn .btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+  background: linear-gradient(135deg, #3db3dc 0%, #2c9fc7 100%);
+  box-shadow: 0 8px 24px rgba(44, 159, 199, 0.5), 0 0 20px rgba(44, 159, 199, 0.3);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Arrow slide animation on hover */
+#prev-btn:hover .btn-icon {
+  animation: slideLeft 0.6s ease-in-out infinite;
+}
+
+#next-btn:hover .btn-icon {
+  animation: slideRight 0.6s ease-in-out infinite;
+}
+
+@keyframes slideLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3px); }
+}
+
+@keyframes slideRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+#prev-btn:active,
+#next-btn:active {
+  transform: translateY(-1px) scale(0.95);
+}
+
+/* ========== DELETE BUTTON ========== */
+/* Blue by default (matches other player buttons), Red Wine on hover */
+#delete-btn {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%); /* Blue like prev/next */
+  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+  opacity: 1;
+  /* Ensure icon is centered */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--easing-smooth);
+}
+
+/* White trash can icon - simple Unicode icon for guaranteed visibility */
+#delete-btn .delete-icon {
+  font-size: 20px;
+  color: white;
+  display: block;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Hover: changes to Red Wine background */
 #delete-btn:hover {
-  animation: shake 0.4s var(--easing-smooth);
+  background: #A1081F; /* Red Wine - solid color */
+  box-shadow: 0 8px 24px rgba(161, 8, 31, 0.5), 0 0 20px rgba(161, 8, 31, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  animation: shake 0.5s var(--easing-smooth);
+}
+
+#delete-btn:hover .delete-icon {
+  animation: trashShake 0.5s var(--easing-smooth);
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
-  20%, 40%, 60%, 80% { transform: translateX(3px); }
+  0%, 100% { transform: translateY(-3px) scale(1.05) rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: translateY(-3px) scale(1.05) rotate(-3deg); }
+  20%, 40%, 60%, 80% { transform: translateY(-3px) scale(1.05) rotate(3deg); }
 }
 
-/* Disabled state */
+@keyframes trashShake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+  20%, 40%, 60%, 80% { transform: rotate(5deg); }
+}
+
+/* Active: subtle scale down for tactile feedback */
+#delete-btn:active {
+  transform: translateY(-1px) scale(0.96); /* Subtle scale down */
+  background: #850418; /* Darker Red Wine for pressed state */
+  animation: none;
+}
+
+/* ========== DISABLED STATE ========== */
 .controls button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  filter: grayscale(0.8);
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transform: scale(0.95);
-  filter: grayscale(0.5);
 }
 
-/* Success feedback */
+.controls button:disabled .btn-icon {
+  opacity: 0.6;
+}
+
+/* ========== LOADING STATE ========== */
+.controls button.loading {
+  pointer-events: none;
+}
+
+.controls button.loading .btn-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========== SUCCESS FEEDBACK ========== */
 @keyframes successPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); background: #4caf50; }
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  }
+  50% { 
+    transform: scale(1.15);
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.6);
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  }
 }
 
 .controls button.success {
-  animation: successPulse 0.5s var(--easing-bounce);
+  animation: successPulse 0.6s var(--easing-bounce);
 }
 
-/* Error feedback */
+/* ========== ERROR FEEDBACK ========== */
 @keyframes errorShake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+  20%, 40%, 60%, 80% { transform: translateX(8px); }
 }
 
 .controls button.error {
-  animation: errorShake 0.4s var(--easing-smooth);
-  background: var(--accent);
+  animation: errorShake 0.5s var(--easing-smooth);
+  background: linear-gradient(135deg, #e63946 0%, #c62937 100%);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.5);
+}
+
+/* ========== OVERRIDE BASE PLAYER.CSS STYLES ========== */
+/* Ensure modern enhancements take precedence */
+.controls button {
+  width: 52px !important;
+  height: 52px !important;
+  /* font-size: 0 removed to allow SVG icons to display */
+}
+
+#shuffle-btn {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+/* Blue background for delete button (same as other buttons) */
+#delete-btn {
+  width: 48px !important;
+  height: 48px !important;
+  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%) !important;
+}
+
+#play-btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) !important;
+}
+
+#play-btn.playing {
+  background: linear-gradient(135deg, var(--accent) 0%, #c62937 100%) !important;
+}
+
+#shuffle-btn.active {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
 }
 
 /* ========== PLAYLIST ITEMS - MICRO-INTERACTIONS ========== */
@@ -821,23 +1119,30 @@
 }
 
 /* ========== ADD SONG BUTTON ENHANCEMENT ========== */
+/* Flexbox layout for proper icon and text alignment */
 #add-song-btn {
   position: relative;
   width: 100%;
   margin-bottom: 16px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   font-weight: 600;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to show rotated icon */
   transition: all 0.3s var(--easing-smooth);
+  
+  /* Flexbox for centered alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Consistent spacing between icon and text */
 }
 
+/* Remove absolute positioning from icon */
 #add-song-btn::before {
   content: '+';
-  position: absolute;
-  left: 20px;
   font-size: 24px;
   font-weight: 700;
   transition: transform 0.3s var(--easing-bounce);
+  /* Position is now handled by flexbox */
 }
 
 #add-song-btn:hover::before {
@@ -986,14 +1291,46 @@
     height: 200px;
   }
   
+  /* Adjust button sizes for mobile */
   .controls button {
-    width: 48px;
-    height: 48px;
+    width: 48px !important;
+    height: 48px !important;
   }
   
   #play-btn {
-    width: 56px;
-    height: 56px;
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  #play-btn .btn-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  #shuffle-btn,
+  #delete-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  
+  .btn-icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  
+  #shuffle-btn .btn-icon,
+  #delete-btn .btn-icon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  /* Reduce hover effects on mobile */
+  .controls button:hover {
+    transform: translateY(-2px) scale(1.03);
+  }
+  
+  #play-btn:hover {
+    transform: translateY(-2px) scale(1.05);
   }
 }
 
@@ -1050,4 +1387,105 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ========== SONG DELETED NOTIFICATION POPUP ========== */
+.deleted-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.4), 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: none;
+}
+
+.deleted-notification.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.notification-icon {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notification-text {
+  white-space: nowrap;
+}
+
+/* Mobile responsive notification */
+@media (max-width: 768px) {
+  .deleted-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    padding: 14px 20px;
+  }
+  
+  .notification-content {
+    font-size: 14px;
+  }
+  
+  .notification-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+}
+
+/* ========== DELETE CONFIRMATION MODAL ========== */
+.delete-confirm-modal {
+  max-width: 400px;
+  text-align: center;
+}
+
+.delete-confirm-modal h2 {
+  color: #A1081F;
+  margin-bottom: 10px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  max-width: 150px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons button:active {
+  transform: translateY(0) scale(0.98);
 }

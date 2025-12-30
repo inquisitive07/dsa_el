@@ -10,10 +10,13 @@ const durationEl = document.getElementById("duration");
 playBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
-    playBtn.textContent = "⏸";
+    playBtn.classList.add('playing');
+    // Add success feedback
+    playBtn.classList.add('success');
+    setTimeout(() => playBtn.classList.remove('success'), 600);
   } else {
     audio.pause();
-    playBtn.textContent = "▶";
+    playBtn.classList.remove('playing');
   }
 };
 

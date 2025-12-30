@@ -24,7 +24,7 @@
     <!-- Playlist -->
     <aside class="playlist-sidebar">
       <h2>Playlist</h2>
-      <button id="add-song-btn" class="action-btn" style="width: 100%; margin-bottom: 12px;">+ Add Song</button>
+      <button id="add-song-btn" class="action-btn" style="width: 100%; margin-bottom: 12px;">Add Song</button>
       <ul id="playlist"></ul>
     </aside>
 
@@ -38,11 +38,34 @@
       <p id="song-artist"></p>
 
       <div class="controls">
-        <button id="shuffle-btn" title="Shuffle">🔀</button>
-        <button id="prev-btn">⏮</button>
-        <button id="play-btn">▶</button>
-        <button id="next-btn">⏭</button>
-        <button id="delete-btn" class="danger-btn" title="Delete Song">🗑️</button>
+        <button id="shuffle-btn" class="control-btn" title="Shuffle" aria-label="Shuffle">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+          </svg>
+        </button>
+        <button id="prev-btn" class="control-btn" aria-label="Previous">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 19 2 12 11 5 11 19"/>
+            <polygon points="22 19 13 12 22 5 22 19"/>
+          </svg>
+        </button>
+        <button id="play-btn" class="control-btn play-btn-hero" aria-label="Play">
+          <svg class="btn-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5.14v14.72c0 .96 1.04 1.56 1.88 1.09l11.13-6.36c.85-.49.85-1.69 0-2.18L9.88 4.05C9.04 3.58 8 4.18 8 5.14z"/>
+          </svg>
+          <svg class="btn-icon pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+          </svg>
+        </button>
+        <button id="next-btn" class="control-btn" aria-label="Next">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 19 22 12 13 5 13 19"/>
+            <polygon points="2 19 11 12 2 5 2 19"/>
+          </svg>
+        </button>
+        <button id="delete-btn" class="control-btn danger-btn" title="Delete Song" aria-label="Delete Song">
+          <span class="delete-icon">🗑️</span>
+        </button>
       </div>
 
       <input type="range" id="progress-bar" value="0">
@@ -114,6 +137,18 @@
   </div>
 </div>
 
+<!-- DELETE CONFIRMATION MODAL -->
+<div id="delete-modal" class="theory-modal hidden">
+  <div class="theory-content delete-confirm-modal">
+    <h2>Delete Song?</h2>
+    <p id="delete-song-name" style="margin: 20px 0; font-size: 16px; color: #666;">Are you sure you want to delete this song from the playlist?</p>
+    <div class="modal-buttons">
+      <button id="cancel-delete" class="action-btn" style="background: #666;">Cancel</button>
+      <button id="confirm-delete" class="action-btn" style="background: #A1081F;">Delete</button>
+    </div>
+  </div>
+</div>
+
 
 <audio id="audio"></audio>
 
@@ -123,5 +158,6 @@
 <script src="js/player.js"></script>
 <script src="js/app.js"></script>
 <script src="js/micro-interactions.js"></script>
+<script src="js/button-enhancements.js"></script>
 </body>
 </html>
