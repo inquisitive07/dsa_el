@@ -213,9 +213,21 @@ function fisherYatesShuffle(array) {
 // DLL VIEW TOGGLE
 // ===============================
 document.getElementById("toggle-dll").onclick = () => {
-  document
-    .querySelector(".dll-visualization")
-    .classList.toggle("hidden");
+  const dllSection = document.querySelector(".dll-visualization");
+  const toggleBtn = document.getElementById("toggle-dll");
+  
+  // Toggle visibility
+  dllSection.classList.toggle("hidden");
+  
+  // Toggle active state on button
+  toggleBtn.classList.toggle("active");
+  
+  // Update button text
+  if (dllSection.classList.contains("hidden")) {
+    toggleBtn.textContent = "Doubly Linked List View";
+  } else {
+    toggleBtn.textContent = "Hide Doubly Linked List";
+  }
 };
 
 // ===============================
