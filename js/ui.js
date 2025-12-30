@@ -44,15 +44,18 @@ function renderPlaylist(dll, current) {
 // NOW PLAYING SECTION (CENTER)
 // ===============================
 function updateNowPlaying(node) {
-  // Smooth image transition
-  coverImg.style.opacity = 0;
+  // Smooth image transition with fade-out class
+  coverImg.classList.add('fade-out');
 
   setTimeout(() => {
     coverImg.src = node.song.cover;
     titleEl.textContent = node.song.title;
     artistEl.textContent = node.song.artist;
-    coverImg.style.opacity = 1;
-  }, 200);
+    
+    // Trigger fade-in after image loads
+    coverImg.classList.remove('fade-out');
+    coverImg.classList.add('fade-in');
+  }, 250);
 }
 
 // ===============================

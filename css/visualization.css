@@ -1,3 +1,41 @@
+/* Keyframe for pulsing active node */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(232, 183, 204, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(232, 183, 204, 0);
+  }
+}
+
+/* Keyframe for flowing arrow animation */
+@keyframes flow {
+  0% {
+    opacity: 0.3;
+    transform: translateX(-5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateX(5px);
+  }
+}
+
+/* Keyframe for fade and slide transition */
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .dll-visualization {
   margin-top: 30px;
   background: var(--bg-panel);
@@ -13,25 +51,43 @@
   overflow-x: auto;
 }
 
+/* Enhanced nodes with smooth transitions and hover effect */
 .dll-node {
   padding: 12px 18px;
   border-radius: 16px;
   background: var(--bg-secondary);
   min-width: 140px;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  /* Fade and slide animation when appearing */
+  animation: fadeSlide 0.4s ease;
 }
 
+/* Node hover: subtle scale and shadow */
+.dll-node:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(232, 183, 204, 0.3);
+}
+
+/* Active node with pulsing glow effect */
 .dll-node.active {
   background: var(--accent-primary);
   color: white;
   transform: scale(1.08);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 0 20px rgba(232, 183, 204, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  /* Pulsing animation for active node */
+  animation: pulse 2s infinite, fadeSlide 0.4s ease;
 }
 
+/* Enhanced arrows with flowing animation */
 .arrow {
   font-size: 1.4rem;
   color: var(--accent-secondary);
+  /* Flowing animation for visual interest */
+  animation: flow 2s ease-in-out infinite;
+  transition: all 0.3s ease;
 }
 
 .pointer-row {

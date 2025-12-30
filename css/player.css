@@ -5,6 +5,7 @@
   margin: 16px 0;
 }
 
+/* Enhanced button styling with smooth animations */
 .controls button {
   width: 48px;
   height: 48px;
@@ -12,14 +13,113 @@
   border: none;
   cursor: pointer;
   background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  /* Smooth transition for all interactive effects */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+/* Hover effect: gentle lift and shadow */
+.controls button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Active state: subtle press effect */
+.controls button:active {
+  transform: scale(0.95);
+}
+
+/* Ripple effect container using ::after pseudo-element */
+.controls button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(232, 183, 204, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s, opacity 0.6s;
+  opacity: 0;
+}
+
+.controls button:active::after {
+  width: 100px;
+  height: 100px;
+  opacity: 0;
+}
+
+/* Enhanced progress bar styling with proper alignment */
 #progress-bar {
   width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #f0e6ed;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+  margin: 16px 0 8px 0;
+  display: block;
+}
+
+/* Webkit (Chrome/Safari) progress bar thumb - properly aligned */
+#progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(232, 183, 204, 0.4);
+  margin-top: -5px; /* Centers thumb on track */
+}
+
+/* Thumb hover effect with glow */
+#progress-bar::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(232, 183, 204, 0.8);
+}
+
+/* Firefox progress bar thumb - properly aligned */
+#progress-bar::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(232, 183, 204, 0.4);
+}
+
+#progress-bar::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(232, 183, 204, 0.8);
+}
+
+/* Firefox progress bar track */
+#progress-bar::-moz-range-track {
+  height: 6px;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Webkit progress bar track - properly styled */
+#progress-bar::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
 }
 
 .time-info {
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
+  margin-top: 8px;
+  padding: 0 4px;
 }
