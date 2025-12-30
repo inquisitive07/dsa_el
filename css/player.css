@@ -5,121 +5,122 @@
   margin: 16px 0;
 }
 
-/* Enhanced button styling with smooth animations */
+/* Control buttons - Curious Blue with specified interactions */
 .controls button {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  background: var(--bg-secondary);
-  position: relative;
-  overflow: hidden;
-  /* Smooth transition for all interactive effects */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background: var(--blue-accent);
+  color: white;
+  font-size: 18px;
+  font-weight: 500; /* Medium for buttons */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Hover effect: gentle lift and shadow */
+/* Hover: darker blue + shadow */
 .controls button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: #2489AD; /* darker Curious Blue */
+  box-shadow: var(--shadow-hover);
 }
 
-/* Active state: subtle press effect */
+/* Active: scale 1.05 */
 .controls button:active {
-  transform: scale(0.95);
+  transform: scale(1.05);
+  background: #1F7A99;
 }
 
-/* Ripple effect container using ::after pseudo-element */
-.controls button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(232, 183, 204, 0.4);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s, opacity 0.6s;
-  opacity: 0;
-}
-
-.controls button:active::after {
-  width: 100px;
-  height: 100px;
-  opacity: 0;
-}
-
-/* Enhanced progress bar styling with proper alignment */
+/* Progress bar - Blaze Orange track, Orange Yellow fill */
 #progress-bar {
   width: 100%;
-  height: 6px;
+  height: 8px;
   -webkit-appearance: none;
   appearance: none;
-  background: #f0e6ed;
+  background: #E5D9C6;
   border-radius: 10px;
   outline: none;
-  transition: all 0.2s ease;
-  margin: 16px 0 8px 0;
+  transition: background-color 0.2s ease;
+  margin: 20px 0 12px 0;
   display: block;
 }
 
-/* Webkit (Chrome/Safari) progress bar thumb - properly aligned */
+/* Webkit (Chrome/Safari) progress bar thumb - Blaze Orange */
 #progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  background: var(--accent-primary);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 6px rgba(232, 183, 204, 0.4);
-  margin-top: -5px; /* Centers thumb on track */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow-card);
+  margin-top: -5px;
 }
 
-/* Thumb hover effect with glow */
+/* Thumb hover: Orange Yellow */
 #progress-bar::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 12px rgba(232, 183, 204, 0.8);
+  background: var(--accent-secondary);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Firefox progress bar thumb - properly aligned */
+/* Thumb active: scale 1.05 */
+#progress-bar::-webkit-slider-thumb:active {
+  transform: scale(1.05);
+  background: var(--accent-secondary);
+}
+
+/* Firefox progress bar thumb - Blaze Orange */
 #progress-bar::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  background: var(--accent-primary);
   cursor: pointer;
   border: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 6px rgba(232, 183, 204, 0.4);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow-card);
 }
 
 #progress-bar::-moz-range-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 12px rgba(232, 183, 204, 0.8);
+  background: var(--accent-secondary);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Firefox progress bar track */
+#progress-bar::-moz-range-thumb:active {
+  transform: scale(1.05);
+  background: var(--accent-secondary);
+}
+
+/* Firefox progress bar track - Blaze Orange */
 #progress-bar::-moz-range-track {
-  height: 6px;
+  height: 8px;
   border-radius: 10px;
-  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  background: var(--accent-primary);
 }
 
-/* Webkit progress bar track - properly styled */
+/* Webkit progress bar track - Blaze Orange */
 #progress-bar::-webkit-slider-runnable-track {
-  height: 6px;
+  height: 8px;
   border-radius: 10px;
-  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  background: var(--accent-primary);
 }
 
 .time-info {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 13px;
   margin-top: 8px;
   padding: 0 4px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* DLL Toggle wrapper */
+.dll-toggle-wrapper {
+  margin-top: 24px;
 }

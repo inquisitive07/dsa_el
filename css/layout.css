@@ -6,7 +6,11 @@
 
 .header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: var(--text-secondary); /* Red Wine */
 }
 
 .content {
@@ -15,55 +19,81 @@
   gap: 24px;
 }
 
-/* Enhanced sidebar with softer shadow and smooth hover */
+/* Playlist sidebar - white card with Intelly-style rounded corners */
 .playlist-sidebar {
-  background: white;
-  padding: 16px;
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease;
 }
 
 .playlist-sidebar:hover {
-  box-shadow: 0 4px 16px rgba(232, 183, 204, 0.25);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Enhanced playlist items with smooth hover effects */
+.playlist-sidebar h2 {
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600; /* SemiBold */
+  margin-bottom: 16px;
+}
+
+/* Playlist items - Orange Yellow for active */
+#playlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 #playlist li {
-  padding: 10px;
-  border-radius: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
   cursor: pointer;
-  /* Smooth transition for all interactive states */
-  transition: all 0.3s ease;
-  position: relative;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500; /* Medium for playlist items */
 }
 
-/* Hover effect: gentle lift and background change */
+/* Hover: subtle background */
 #playlist li:hover {
-  transform: translateY(-2px);
-  background: rgba(232, 183, 204, 0.15);
-  box-shadow: 0 4px 10px rgba(232, 183, 204, 0.2);
+  background: #F9F3E8;
 }
 
-/* Active item with subtle glow */
+/* Active item - Orange Yellow background */
 #playlist li.active {
-  background: #e8b7cc;
-  color: white;
-  box-shadow: 0 4px 16px rgba(232, 183, 204, 0.45);
+  background: var(--accent-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+  transform: scale(1.02);
 }
 
-/* Enhanced player section with softer shadow */
+/* Player section - white card with rounded corners */
 .player-section {
-  background: white;
-  padding: 24px;
-  border-radius: 22px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--bg-secondary);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
   text-align: center;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .player-section:hover {
-  box-shadow: 0 4px 16px rgba(232, 183, 204, 0.25);
+  box-shadow: var(--shadow-hover);
+}
+
+.player-section h2 {
+  font-size: 24px;
+  font-weight: 600; /* SemiBold for song title */
+  margin: 16px 0 8px 0;
+}
+
+.player-section p {
+  color: var(--text-secondary); /* Red Wine for artist */
+  font-weight: 400; /* Regular for artist name */
+  margin: 0 0 20px 0;
+  font-size: 16px;
 }
 
 /* Album cover with smooth fade transition */
@@ -78,32 +108,52 @@
   width: 220px;
   height: 220px;
   object-fit: cover;
-  border-radius: 18px;
-  /* Smooth fade transition between songs */
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  transition: opacity 0.3s ease;
 }
 
 /* Fade effect class for JavaScript to toggle */
 .cover img.fade-out {
   opacity: 0;
-  transform: scale(0.95);
 }
 
 .cover img.fade-in {
   opacity: 1;
-  transform: scale(1);
 }
 
-/* Enhanced DLL visualization container */
+/* DLL visualization container - white card */
 .dll-visualization {
   margin-top: 30px;
-  background: white;
-  padding: 16px;
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  background: var(--bg-secondary);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease;
 }
 
 .dll-visualization:hover {
-  box-shadow: 0 4px 16px rgba(232, 183, 204, 0.25);
+  box-shadow: var(--shadow-hover);
+}
+
+.dll-visualization h3 {
+  color: var(--text-secondary); /* Red Wine */
+  font-weight: 600; /* SemiBold */
+  margin-bottom: 20px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .playlist-sidebar {
+    order: 2;
+  }
+  
+  .player-section {
+    order: 1;
+  }
 }

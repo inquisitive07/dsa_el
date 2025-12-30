@@ -1,116 +1,192 @@
+/* Exact color palette - solid colors only, no gradients or glassmorphism */
 :root {
-  --bg-main: #FBF6F9;
-  --bg-panel: #FFFFFF;
-  --bg-secondary: #F4EAF1;
-
-  --accent-primary: #E8B7CC;
-  --accent-secondary: #C3AED6;
-
-  --text-primary: #3A2E39;
-  --text-secondary: #7A6C78;
-
-  --shadow-soft: 0 10px 25px rgba(232,183,204,0.35);
+  /* Backgrounds */
+  --bg-primary: #F5ECD2;         /* Wheatfield - main page background */
+  --bg-secondary: #FFFFFF;       /* White - cards, modals */
+  
+  /* Accents */
+  --accent-primary: #F06B04;     /* Blaze Orange - primary buttons, progress */
+  --accent-secondary: #FBB728;   /* Orange Yellow - highlights, active items */
+  --blue-accent: #2C9FC7;        /* Curious Blue - player controls */
+  --blue-secondary: #1570AC;     /* Nice Blue - secondary elements */
+  --red-accent: #A1051F;         /* Red Wine - header, secondary text */
+  
+  /* Text */
+  --text-primary: #000000;       /* Black - main text */
+  --text-secondary: #A1051F;     /* Red Wine - secondary text, accents */
+  
+  /* Shadows - minimal for depth */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  /* Overlay */
+  --overlay: rgba(0, 0, 0, 0.5);
 }
 
 * {
   box-sizing: border-box;
-  font-family: system-ui, sans-serif;
 }
 
 body {
-  background: var(--bg-main);
+  background: var(--bg-primary);
   margin: 0;
   color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400; /* Regular for body text */
+  line-height: 1.6;
 }
 
 .hidden {
   display: none;
 }
 
-/* Keyframe for bounce effect on buttons */
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-/* Keyframe for fade-in animation */
+/* Simple fade-in for modals only */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
-/* Enhanced Buttons with smooth transitions */
+/* Primary action buttons - Blaze Orange with specified interactions */
 .action-btn {
   background: var(--accent-primary);
   color: white;
   border: none;
-  border-radius: 16px;
-  padding: 12px 22px;
+  border-radius: 12px;
+  padding: 12px 24px;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(232,183,204,0.45);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+  font-size: 14px;
+  font-weight: 500; /* Medium for buttons */
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover with bounce effect and smooth background transition */
+/* Hover: darker background + small shadow */
 .action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(232,183,204,0.6);
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  animation: bounce 0.6s ease;
+  background: #D45D03; /* darker Blaze Orange */
+  box-shadow: var(--shadow-hover);
 }
 
+/* Active: scale 1.05 + flip to Orange Yellow */
 .action-btn:active {
-  transform: scale(0.95);
+  transform: scale(1.05);
+  background: var(--accent-secondary);
 }
 
-/* Theory modal with fade-in animation */
+/* Danger buttons - Red Wine */
+.danger-btn {
+  background: var(--red-accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500; /* Medium for buttons */
+  box-shadow: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.danger-btn:hover {
+  background: #850418; /* darker Red Wine */
+  box-shadow: var(--shadow-hover);
+}
+
+.danger-btn:active {
+  transform: scale(1.05);
+  background: #6E0314;
+}
+
+/* Headings - Poppins SemiBold */
+h1 {
+  color: var(--text-secondary); /* Red Wine */
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600; /* SemiBold */
+}
+
+h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  margin: 0 0 16px 0;
+  font-weight: 600; /* SemiBold for all headings */
+}
+
+/* Theory modal with semi-transparent black overlay */
 .theory-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  /* Fade-in animation when appearing */
   animation: fadeIn 0.3s ease;
 }
 
 .theory-content {
-  background: #ffffff;
+  background: var(--bg-secondary);
   width: 600px;
   max-width: 90%;
   max-height: 80vh;
-  padding: 24px 28px;
-  border-radius: 20px;
+  padding: 32px;
+  border-radius: 16px;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   position: relative;
-  /* Smooth scale animation for content */
-  animation: fadeIn 0.4s ease;
+  animation: fadeIn 0.3s ease;
+}
+
+.theory-content h2 {
+  color: var(--text-secondary); /* Red Wine */
+  margin-bottom: 20px;
+  font-weight: 600; /* SemiBold */
+}
+
+.theory-content h4 {
+  color: var(--accent-primary); /* Blaze Orange */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600; /* SemiBold */
 }
 
 #close-theory {
   position: absolute;
-  top: 14px;
-  right: 16px;
+  top: 16px;
+  right: 20px;
   border: none;
   background: none;
-  font-size: 1.2rem;
+  font-size: 28px;
   cursor: pointer;
+  color: var(--text-primary);
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#close-theory:hover {
+  color: var(--text-secondary);
+  transform: scale(1.1);
 }
 
 /* Utility */
 .hidden {
   display: none !important;
+}
+
+/* Song Title - Poppins SemiBold */
+#song-title {
+  font-weight: 600;
+}
+
+/* Artist Name - Poppins Regular, slightly smaller */
+#song-artist {
+  font-weight: 400;
+  font-size: 0.9em;
 }
