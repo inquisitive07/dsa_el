@@ -85,38 +85,91 @@ function updatePointers(dll, current) {
 // CIRCULAR DLL VISUALIZATION
 // ===============================
 function renderDLL(dll, current) {
+  // Store current scroll position
+  const scrollPos = dllNodesEl.scrollLeft;
+  
   dllNodesEl.innerHTML = "";
 
   if (!dll.head) return;
 
   let node = dll.head;
+  let index = 0;
 
   do {
-    // Node box
+    // Node box with staggered animation
     const box = document.createElement("div");
     box.className = "dll-node";
     box.textContent = node.song.title;
+    box.style.animationDelay = `${index * 0.05}s`;
 
     if (node === current) {
       box.classList.add("active");
     }
 
+    // Add click handler for node selection
+    box.onclick = () => {
+      if (window.selectNode && typeof window.selectNode === 'function') {
+        window.selectNode(node);
+      }
+    };
+
+    // Hover effects with micro-interactions
+    box.addEventListener('mouseenter', () => {
+      box.style.transform = node === current ? 'translateY(-8px) scale(1.15)' : 'translateY(-8px) scale(1.05)';
+    });
+
+    box.addEventListener('mouseleave', () => {
+      box.style.transform = node === current ? 'scale(1.15)' : 'scale(1)';
+    });
+
     dllNodesEl.appendChild(box);
 
-    // Bidirectional arrow
+    // Bidirectional arrow with staggered animation
     const arrow = document.createElement("span");
     arrow.className = "arrow";
     arrow.textContent = "⇄";
+    arrow.style.animationDelay = `${index * 0.05 + 0.15}s`;
+    arrow.title = "Bidirectional link";
     dllNodesEl.appendChild(arrow);
 
     node = node.next;
+    index++;
   } while (node !== dll.head);
 
-  // Circular loop indicator
+  // Circular loop indicator with enhanced styling
   const loopInfo = document.createElement("div");
   loopInfo.className = "circular-arrow";
-  loopInfo.textContent = "↺ Circular Link: Tail ⇄ Head";
+  loopInfo.innerHTML = `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
+      <path d="M17 1L21 5L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3 11V9C3 6.79 4.79 5 7 5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7 23L3 19L7 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M21 13V15C21 17.21 19.21 19 17 19H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span style="font-weight: 600; color: var(--accent-primary);">Circular Doubly Linked List</span>
+    <br>
+    <span style="font-size: 13px; opacity: 0.8;">Tail ⇄ Head connection forms the loop</span>
+  `;
   dllNodesEl.appendChild(loopInfo);
+
+  // Restore scroll position smoothly
+  setTimeout(() => {
+    dllNodesEl.scrollLeft = scrollPos;
+  }, 50);
+
+  // Auto-scroll to active node if it's out of view
+  setTimeout(() => {
+    const activeNode = dllNodesEl.querySelector('.dll-node.active');
+    if (activeNode) {
+      const containerRect = dllNodesEl.getBoundingClientRect();
+      const nodeRect = activeNode.getBoundingClientRect();
+      
+      // Check if node is outside visible area
+      if (nodeRect.left < containerRect.left || nodeRect.right > containerRect.right) {
+        activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, 100);
 }
 
 // ===============================

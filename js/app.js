@@ -31,7 +31,19 @@ function initializePlaylist() {
 function selectNode(node) {
   if (!node) return;
 
+  // Store previous node for transition animation
+  const previousNode = currentNode;
   currentNode = node;
+
+  // Add transition effect to DLL visualization
+  const dllSection = document.querySelector(".dll-visualization");
+  if (dllSection && !dllSection.classList.contains("hidden")) {
+    // Find the previously active node and add fade-out effect
+    const prevActiveNode = document.querySelector('#dll-nodes .dll-node.active');
+    if (prevActiveNode && previousNode !== node) {
+      prevActiveNode.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    }
+  }
 
   audio.src = node.song.src;
   audio.load();
@@ -39,7 +51,22 @@ function selectNode(node) {
 
   playBtn.textContent = "⏸";
   updateUI(dll, currentNode);
+
+  // Trigger visual feedback
+  if (window.microInteractions) {
+    const activeNode = document.querySelector('#dll-nodes .dll-node.active');
+    if (activeNode) {
+      // Add a quick scale pulse effect
+      activeNode.style.animation = 'none';
+      setTimeout(() => {
+        activeNode.style.animation = '';
+      }, 10);
+    }
+  }
 }
+
+// Make selectNode globally accessible
+window.selectNode = selectNode;
 
 // ===============================
 // NAVIGATION CONTROLS
@@ -69,8 +96,14 @@ function deleteSong() {
     );
   }
   
-  // Get the current playlist item for animation
+  // Get the current playlist item and DLL node for animation
   const activeItem = document.querySelector('#playlist li.active');
+  const activeDllNode = document.querySelector('#dll-nodes .dll-node.active');
+  
+  // Animate DLL node removal if visible
+  if (activeDllNode) {
+    activeDllNode.classList.add('removing');
+  }
   
   // Get safe next node before deletion
   const safeNext = dll.delete(currentNode);
@@ -92,12 +125,17 @@ function deleteSong() {
   }
   
   // Animate removal then update UI
+  const animationDuration = 500; // Match CSS animation duration
+  
   if (activeItem && window.microInteractions) {
     window.microInteractions.animateRemoveItem(activeItem, () => {
       updateUI(dll, currentNode);
     });
   } else {
-    updateUI(dll, currentNode);
+    // Wait for CSS animation to complete
+    setTimeout(() => {
+      updateUI(dll, currentNode);
+    }, animationDuration);
   }
 }
 
@@ -131,14 +169,34 @@ function addSelectedSong(song) {
     window.microInteractions.triggerSuccess(addBtn);
   }
   
+  // Update UI with smooth animation
   updateUI(dll, currentNode);
   
-  // Scroll to newly added song
+  // Highlight and scroll to the newly added node
   setTimeout(() => {
+    const dllNodes = document.querySelectorAll('#dll-nodes .dll-node');
+    const lastNode = dllNodes[dllNodes.length - 1]; // Get last added node (before circular arrow)
+    
+    if (lastNode && lastNode.classList.contains('dll-node')) {
+      // Add a temporary highlight effect
+      lastNode.style.background = 'linear-gradient(135deg, #90EE90 0%, #98FB98 100%)';
+      lastNode.style.borderColor = '#32CD32';
+      
+      // Scroll to the new node
+      lastNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      
+      // Remove highlight after 2 seconds
+      setTimeout(() => {
+        lastNode.style.background = '';
+        lastNode.style.borderColor = '';
+      }, 2000);
+    }
+    
+    // Legacy scroll function for playlist
     if (window.microInteractions) {
       window.microInteractions.scrollToActive();
     }
-  }, 100);
+  }, 150);
 }
 
 // ===============================
