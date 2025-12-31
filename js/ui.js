@@ -15,6 +15,14 @@ const lyricsContainer = document.getElementById("lyrics-container");
 const pointerBoxes = document.querySelectorAll(".pointer-box");
 
 // ===============================
+// STATE TRACKING FOR HEAD/TAIL
+// Track which songs HEAD and TAIL point to
+// Only update labels when these change
+// ===============================
+let lastHeadSongTitle = null;
+let lastTailSongTitle = null;
+
+// ===============================
 // PLAYLIST RENDERING (LEFT PANEL)
 // ===============================
 function renderPlaylist(dll, current) {
@@ -135,10 +143,16 @@ function renderDLL(dll, current) {
   
   dllNodesEl.innerHTML = "";
 
-  if (!dll.head) return;
+  if (!dll.head) {
+    // Hide labels when list is empty
+    updateHeadTailLabels(null, null);
+    return;
+  }
 
   let node = dll.head;
   let index = 0;
+  let headNode = null;
+  let tailNode = null;
 
   do {
     // Node box with staggered animation
@@ -146,6 +160,18 @@ function renderDLL(dll, current) {
     box.className = "dll-node";
     box.textContent = node.song.title;
     box.style.animationDelay = `${index * 0.05}s`;
+    
+    // Mark HEAD node (first node)
+    if (node === dll.head) {
+      box.setAttribute('data-is-head', 'true');
+      headNode = box;
+    }
+    
+    // Mark TAIL node (last node)
+    if (node === dll.tail) {
+      box.setAttribute('data-is-tail', 'true');
+      tailNode = box;
+    }
 
     if (node === current) {
       box.classList.add("active");
@@ -201,6 +227,21 @@ function renderDLL(dll, current) {
   setTimeout(() => {
     dllNodesEl.scrollLeft = scrollPos;
   }, 50);
+  
+  // CRITICAL: Always update HEAD and TAIL labels when renderDLL is called
+  // Reason: renderDLL clears and recreates ALL DOM elements (innerHTML = "")
+  // Even if dll.head/dll.tail point to the same songs, the DOM elements are NEW
+  // We must reattach labels to the new DOM elements to avoid stale references
+  // Track song titles to detect structural changes (used elsewhere for optimization)
+  lastHeadSongTitle = dll.head ? dll.head.song.title : null;
+  lastTailSongTitle = dll.tail ? dll.tail.song.title : null;
+  
+  // Always update labels because DOM was recreated
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      updateHeadTailLabels(headNode, tailNode);
+    });
+  });
 
   // Auto-scroll to active node if it's out of view
   setTimeout(() => {
@@ -218,13 +259,175 @@ function renderDLL(dll, current) {
 }
 
 // ===============================
-// MAIN UI UPDATE FUNCTION
+// UPDATE HEAD AND TAIL LABELS
+// Position labels above their respective nodes
+// Handles both multi-node and single-node cases
 // ===============================
-function updateUI(dll, current) {
+function updateHeadTailLabels(headNodeEl, tailNodeEl) {
+  const headLabel = document.getElementById('head-label');
+  const tailLabel = document.getElementById('tail-label');
+  
+  if (!headLabel || !tailLabel) return;
+  
+  // Hide labels if nodes don't exist
+  if (!headNodeEl || !tailNodeEl) {
+    headLabel.classList.remove('visible');
+    tailLabel.classList.remove('visible');
+    return;
+  }
+  
+  // Get the dll-nodes container for positioning reference
+  const container = dllNodesEl;
+  const containerRect = container.getBoundingClientRect();
+  
+  // Get node rectangles
+  const headRect = headNodeEl.getBoundingClientRect();
+  const tailRect = tailNodeEl.getBoundingClientRect();
+  
+  // Check if HEAD and TAIL are the same node (single node in list)
+  const isSingleNode = (headNodeEl === tailNodeEl);
+  
+  if (isSingleNode) {
+    // SINGLE NODE: Position HEAD above-left and TAIL above-right to avoid overlap
+    const nodeCenter = headRect.left - containerRect.left + container.scrollLeft + (headRect.width / 2);
+    const labelSpacing = 8; // Gap between labels
+    
+    // Reset any custom positioning from multi-node mode
+    headLabel.style.top = '-45px';
+    tailLabel.style.top = '-45px';
+    
+    // Position HEAD label to the left of center
+    const headLabelLeft = nodeCenter - headLabel.offsetWidth - labelSpacing;
+    headLabel.style.left = `${headLabelLeft}px`;
+    headLabel.classList.add('visible');
+    
+    // Position TAIL label to the right of center
+    const tailLabelLeft = nodeCenter + labelSpacing;
+    tailLabel.style.left = `${tailLabelLeft}px`;
+    tailLabel.classList.add('visible');
+    
+  } else {
+    // MULTIPLE NODES: Position each label centered above its respective node
+    
+    // Reset any custom positioning
+    headLabel.style.top = '-45px';
+    tailLabel.style.top = '-45px';
+    
+    // Position HEAD label centered above head node
+    const headLabelLeft = headRect.left - containerRect.left + container.scrollLeft + (headRect.width / 2) - (headLabel.offsetWidth / 2);
+    headLabel.style.left = `${headLabelLeft}px`;
+    headLabel.classList.add('visible');
+    
+    // Position TAIL label centered above tail node
+    const tailLabelLeft = tailRect.left - containerRect.left + container.scrollLeft + (tailRect.width / 2) - (tailLabel.offsetWidth / 2);
+    tailLabel.style.left = `${tailLabelLeft}px`;
+    tailLabel.classList.add('visible');
+  }
+}
+
+// Make updateHeadTailLabels globally accessible for use in app.js toggle handler
+window.updateHeadTailLabels = updateHeadTailLabels;
+
+// ===============================
+// FORCE UPDATE DLL LABELS
+// Forces HEAD/TAIL label repositioning regardless of state
+// Used when visualization is first shown or after manual changes
+// ===============================
+function forceUpdateDLLLabels() {
+  const headNode = dllNodesEl.querySelector('[data-is-head="true"]');
+  const tailNode = dllNodesEl.querySelector('[data-is-tail="true"]');
+  
+  if (headNode && tailNode) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        updateHeadTailLabels(headNode, tailNode);
+      });
+    });
+  }
+}
+
+// Make forceUpdateDLLLabels globally accessible
+window.forceUpdateDLLLabels = forceUpdateDLLLabels;
+
+// ===============================
+// UPDATE ACTIVE NODE (TRAVERSAL ONLY)
+// Updates which node is highlighted as current without re-rendering the DLL
+// Used during next/prev navigation to avoid moving HEAD/TAIL labels
+// ===============================
+function updateActiveNode(dll, current) {
+  // Update active class on DLL nodes without re-rendering
+  const allDllNodes = dllNodesEl.querySelectorAll('.dll-node');
+  
+  if (!dll.head || !current) return;
+  
+  // Find which index the current node is at
+  let targetIndex = 0;
+  let node = dll.head;
+  let found = false;
+  
+  do {
+    if (node === current) {
+      found = true;
+      break;
+    }
+    targetIndex++;
+    node = node.next;
+  } while (node !== dll.head);
+  
+  // Update active class on corresponding DOM element
+  if (found && allDllNodes[targetIndex]) {
+    // Remove active from all nodes
+    allDllNodes.forEach(el => {
+      el.classList.remove('active');
+      el.style.transform = 'scale(1)';
+    });
+    
+    // Add active to current node
+    allDllNodes[targetIndex].classList.add('active');
+    allDllNodes[targetIndex].style.transform = 'scale(1.15)';
+    
+    // Auto-scroll to active node
+    setTimeout(() => {
+      const activeNode = allDllNodes[targetIndex];
+      if (activeNode) {
+        const containerRect = dllNodesEl.getBoundingClientRect();
+        const nodeRect = activeNode.getBoundingClientRect();
+        
+        if (nodeRect.left < containerRect.left || nodeRect.right > containerRect.right) {
+          activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    }, 50);
+  }
+}
+
+// ===============================
+// MAIN UI UPDATE FUNCTIONS
+// Separated into structural changes vs traversal changes
+// ===============================
+
+// UPDATE UI - STRUCTURAL CHANGES (add/delete/shuffle)
+// Re-renders entire DLL and updates HEAD/TAIL labels
+function updateUIStructure(dll, current) {
   renderPlaylist(dll, current);
-  renderDLL(dll, current);
+  renderDLL(dll, current);  // Full re-render, updates HEAD/TAIL
   updatePointers(dll, current);
   updateNowPlaying(current);
+}
+
+// UPDATE UI - TRAVERSAL ONLY (next/prev navigation)
+// Updates active highlight without moving HEAD/TAIL labels
+function updateUITraversal(dll, current) {
+  renderPlaylist(dll, current);
+  updateActiveNode(dll, current);  // Only update active class, HEAD/TAIL stay fixed
+  updatePointers(dll, current);
+  updateNowPlaying(current);
+}
+
+// Legacy function for backward compatibility
+// By default, use structure update (safest)
+function updateUI(dll, current) {
+  updateUIStructure(dll, current);
 }
 
 // ===============================
@@ -273,4 +476,31 @@ function updateShuffleButton(isOn) {
     shuffleBtn.style.transform = "scale(1)";
     shuffleBtn.title = "Shuffle OFF - Click to shuffle";
   }
+}
+// ===============================
+// SCROLL EVENT LISTENER FOR LABELS
+// Update label positions when scrolling DLL visualization
+// ===============================
+if (dllNodesEl) {
+  dllNodesEl.addEventListener('scroll', () => {
+    const headNode = dllNodesEl.querySelector('[data-is-head="true"]');
+    const tailNode = dllNodesEl.querySelector('[data-is-tail="true"]');
+    
+    if (headNode && tailNode) {
+      updateHeadTailLabels(headNode, tailNode);
+    }
+  });
+  
+  // Also update labels on window resize to handle layout changes
+  window.addEventListener('resize', () => {
+    const headNode = dllNodesEl.querySelector('[data-is-head="true"]');
+    const tailNode = dllNodesEl.querySelector('[data-is-tail="true"]');
+    
+    if (headNode && tailNode) {
+      // Use requestAnimationFrame to wait for layout to settle
+      requestAnimationFrame(() => {
+        updateHeadTailLabels(headNode, tailNode);
+      });
+    }
+  });
 }

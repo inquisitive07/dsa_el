@@ -20,15 +20,16 @@ function initializePlaylist() {
   audio.src = currentNode.song.src;
   audio.load();
 
-  // Initial UI render
-  updateUI(dll, currentNode);
+  // Initial UI render (structural)
+  updateUIStructure(dll, currentNode);
 }
 
 // ===============================
 // CENTRAL NODE SELECTION FUNCTION
+// Distinguishes between structural changes and traversal
 // (single source of truth)
 // ===============================
-function selectNode(node) {
+function selectNode(node, isStructuralChange = false) {
   if (!node) return;
 
   // Store previous node for transition animation
@@ -50,7 +51,15 @@ function selectNode(node) {
   audio.play();
 
   playBtn.textContent = "⏸";
-  updateUI(dll, currentNode);
+  
+  // Use appropriate update based on whether this is structural or traversal
+  if (isStructuralChange) {
+    // Structural change: Re-render DLL, update HEAD/TAIL labels
+    updateUIStructure(dll, currentNode);
+  } else {
+    // Traversal only: Update active node, keep HEAD/TAIL fixed
+    updateUITraversal(dll, currentNode);
+  }
 
   // Trigger visual feedback
   if (window.microInteractions) {
@@ -70,6 +79,7 @@ window.selectNode = selectNode;
 
 // ===============================
 // NAVIGATION CONTROLS
+// Uses traversal-only update to avoid moving HEAD/TAIL labels
 // ===============================
 nextBtn.onclick = () => {
   selectNode(currentNode.next);
@@ -129,12 +139,14 @@ function deleteSong() {
   
   if (activeItem && window.microInteractions) {
     window.microInteractions.animateRemoveItem(activeItem, () => {
-      updateUI(dll, currentNode);
+      // Structural change: list was modified, re-render with HEAD/TAIL update
+      updateUIStructure(dll, currentNode);
     });
   } else {
     // Wait for CSS animation to complete
     setTimeout(() => {
-      updateUI(dll, currentNode);
+      // Structural change: list was modified, re-render with HEAD/TAIL update
+      updateUIStructure(dll, currentNode);
     }, animationDuration);
   }
 }
@@ -170,7 +182,8 @@ function addSelectedSong(song) {
   }
   
   // Update UI with smooth animation
-  updateUI(dll, currentNode);
+  // Structural change: new node added, re-render with HEAD/TAIL update
+  updateUIStructure(dll, currentNode);
   
   // Highlight and scroll to the newly added node
   setTimeout(() => {
@@ -252,7 +265,8 @@ function toggleShuffle() {
   }
   
   // Update UI with shuffle state
-  updateUI(dll, currentNode);
+  // Structural change: list order changed, re-render with HEAD/TAIL update
+  updateUIStructure(dll, currentNode);
   updateShuffleButton(isShuffleOn);
 }
 
@@ -285,6 +299,13 @@ document.getElementById("toggle-dll").onclick = () => {
     toggleBtn.textContent = "Doubly Linked List View";
   } else {
     toggleBtn.textContent = "Hide Doubly Linked List";
+    
+    // FIX: Reposition HEAD/TAIL labels after visualization becomes visible
+    // When visibility changes from hidden to visible, DOM layout is recalculated
+    // We must wait for the browser to complete layout before positioning labels
+    if (typeof forceUpdateDLLLabels === 'function') {
+      forceUpdateDLLLabels();
+    }
   }
 };
 
