@@ -1,26 +1,32 @@
-/* Exact color palette - solid colors only, no gradients or glassmorphism */
+/* Purple & Rose Color Palette - NO gradients allowed */
 :root {
-  /* Backgrounds */
-  --bg-primary: #F5ECD2;         /* Wheatfield - main page background */
-  --bg-secondary: #FFFFFF;       /* White - cards, modals */
+  /* Color Palette - ONLY these colors */
+  --brown-coffee: #461D3A;       /* Darkest - emphasis, dark text */
+  --japanese-violet: #502A50;    /* Dark sections, header */
+  --dark-raspberry: #7E2A53;     /* Highlights, active states, buttons */
+  --pearly-purple: #BA71A2;      /* Main cards background */
+  --classic-rose: #ECD0EC;       /* Page background, light text */
+  
+  /* Semantic mappings */
+  --bg-primary: #ECD0EC;         /* Classic Rose - page background */
+  --bg-secondary: #BA71A2;       /* Pearly Purple - cards */
+  --bg-dark: #502A50;            /* Japanese Violet - header, dark sections */
+  --bg-darker: #461D3A;          /* Brown Coffee - deepest sections */
   
   /* Accents */
-  --accent-primary: #F06B04;     /* Blaze Orange - primary buttons, progress */
-  --accent-secondary: #FBB728;   /* Orange Yellow - highlights, active items */
-  --blue-accent: #2C9FC7;        /* Curious Blue - player controls */
-  --blue-secondary: #1570AC;     /* Nice Blue - secondary elements */
-  --red-accent: #A1051F;         /* Red Wine - header, secondary text */
+  --accent-primary: #7E2A53;     /* Dark Raspberry - buttons, highlights */
+  --accent-hover: #BA71A2;       /* Pearly Purple - hover states */
   
   /* Text */
-  --text-primary: #000000;       /* Black - main text */
-  --text-secondary: #A1051F;     /* Red Wine - secondary text, accents */
+  --text-dark: #461D3A;          /* Brown Coffee - dark text on light backgrounds */
+  --text-light: #ECD0EC;         /* Classic Rose - light text on dark backgrounds */
   
-  /* Shadows - minimal for depth */
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Shadows - using palette colors with opacity */
+  --shadow-card: 0 2px 8px rgba(70, 29, 58, 0.15);
+  --shadow-hover: 0 4px 12px rgba(70, 29, 58, 0.25);
   
   /* Overlay */
-  --overlay: rgba(0, 0, 0, 0.5);
+  --overlay: rgba(70, 29, 58, 0.6);
 }
 
 * {
@@ -28,11 +34,11 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background: var(--bg-primary); /* Classic Rose */
   margin: 0;
-  color: var(--text-primary);
+  color: var(--text-dark); /* Brown Coffee */
   font-family: 'Playfair Display', serif;
-  font-weight: 400; /* Regular for body text */
+  font-weight: 400;
   line-height: 1.6;
 }
 
@@ -50,68 +56,72 @@ body {
   }
 }
 
-/* Primary action buttons - Blaze Orange with specified interactions */
+/* Primary action buttons - Dark Raspberry theme */
 .action-btn {
-  background: var(--accent-primary);
-  color: white;
+  background: var(--accent-primary); /* Dark Raspberry */
+  color: var(--text-light); /* Classic Rose */
   border: none;
   border-radius: 12px;
   padding: 12px 24px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500; /* Medium for buttons */
+  font-weight: 600;
   box-shadow: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover: darker background + small shadow */
+/* Hover: swap to Pearly Purple background */
 .action-btn:hover {
-  background: #D45D03; /* darker Blaze Orange */
+  background: var(--accent-hover); /* Pearly Purple */
+  color: var(--text-dark); /* Brown Coffee */
   box-shadow: var(--shadow-hover);
 }
 
-/* Active: scale 1.05 + flip to Orange Yellow */
+/* Active: scale effect */
 .action-btn:active {
   transform: scale(1.05);
-  background: var(--accent-secondary);
+  background: var(--accent-primary); /* Dark Raspberry */
+  color: var(--text-light); /* Classic Rose */
 }
 
-/* Danger buttons - Red Wine */
+/* Danger buttons - Brown Coffee (darkest) */
 .danger-btn {
-  background: var(--red-accent);
-  color: white;
+  background: var(--bg-darker); /* Brown Coffee */
+  color: var(--text-light); /* Classic Rose */
   border: none;
   border-radius: 12px;
   padding: 12px 24px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500; /* Medium for buttons */
+  font-weight: 600;
   box-shadow: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .danger-btn:hover {
-  background: #850418; /* darker Red Wine */
+  background: var(--japanese-violet);
   box-shadow: var(--shadow-hover);
 }
 
 .danger-btn:active {
   transform: scale(1.05);
-  background: #6E0314;
+  background: var(--bg-darker);
 }
 
-/* Headings - Poppins SemiBold */
+/* Headings */
 h1 {
-  color: var(--text-secondary); /* Red Wine */
+  color: var(--text-light); /* Classic Rose on dark header */
   margin: 0;
   font-size: 32px;
-  font-weight: 600; /* SemiBold */
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 h2, h3, h4, h5, h6 {
-  color: var(--text-primary);
+  color: var(--text-dark); /* Brown Coffee */
   margin: 0 0 16px 0;
-  font-weight: 600; /* SemiBold for all headings */
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 /* Theory modal with semi-transparent black overlay */
@@ -127,29 +137,31 @@ h2, h3, h4, h5, h6 {
 }
 
 .theory-content {
-  background: var(--bg-secondary);
+  background: var(--bg-secondary); /* Pearly Purple */
   width: 600px;
   max-width: 90%;
   max-height: 80vh;
   padding: 32px;
   border-radius: 16px;
   overflow-y: auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(70, 29, 58, 0.3);
   position: relative;
   animation: fadeIn 0.3s ease;
 }
 
 .theory-content h2 {
-  color: var(--text-secondary); /* Red Wine */
+  color: var(--text-light); /* Classic Rose */
   margin-bottom: 20px;
-  font-weight: 600; /* SemiBold */
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .theory-content h4 {
-  color: var(--accent-primary); /* Blaze Orange */
+  color: var(--accent-primary); /* Dark Raspberry */
   margin-top: 20px;
   margin-bottom: 10px;
-  font-weight: 600; /* SemiBold */
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 #close-theory {
@@ -171,7 +183,7 @@ h2, h3, h4, h5, h6 {
 }
 
 #close-theory:hover {
-  color: var(--text-secondary);
+  color: var(--accent-primary); /* Dark Raspberry */
   transform: scale(1.1);
 }
 
@@ -180,9 +192,10 @@ h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-/* Song Title - Poppins SemiBold */
+/* Song Title - Playfair Display 600 */
 #song-title {
   font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* Artist Name - Poppins Regular, slightly smaller */

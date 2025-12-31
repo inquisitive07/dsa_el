@@ -6,17 +6,17 @@
   margin: 16px 0;
 }
 
-/* Control buttons - Curious Blue with specified interactions */
+/* Control buttons - Dark Raspberry theme */
 .controls button {
   width: 52px;
   height: 52px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  background: var(--blue-accent);
-  color: white;
+  background: var(--accent-primary); /* Dark Raspberry */
+  color: var(--text-light); /* Classic Rose */
   font-size: 18px;
-  font-weight: 500; /* Medium for buttons */
+  font-weight: 600;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
   display: flex;
   align-items: center;
@@ -31,43 +31,46 @@
   opacity: 0.6;
 }
 
-/* Delete button specific styling */
+/* Delete button specific styling - Brown Coffee (darkest) */
 #delete-btn {
   width: 44px;
   height: 44px;
   font-size: 16px;
-  background: var(--red-accent);
+  background: var(--bg-darker); /* Brown Coffee */
 }
 
-/* Hover: darker blue + shadow */
+/* Hover: Pearly Purple background */
 .controls button:hover {
-  background: #2489AD; /* darker Curious Blue */
+  background: var(--accent-hover); /* Pearly Purple */
+  color: var(--text-dark); /* Brown Coffee */
   box-shadow: var(--shadow-hover);
 }
 
 /* Delete button hover */
 #delete-btn:hover {
-  background: #850418;
+  background: var(--japanese-violet);
+  color: var(--text-light);
 }
 
-/* Active: scale 1.05 */
+/* Active: scale */
 .controls button:active {
   transform: scale(1.05);
-  background: #1F7A99;
+  background: var(--accent-primary);
+  color: var(--text-light);
 }
 
 /* Delete button active */
 #delete-btn:active {
-  background: #6E0314;
+  background: var(--bg-darker);
 }
 
-/* Progress bar - Blaze Orange track, Orange Yellow fill */
+/* Progress bar - Dark Raspberry track */
 #progress-bar {
   width: 100%;
   height: 8px;
   -webkit-appearance: none;
   appearance: none;
-  background: #E5D9C6;
+  background: rgba(70, 29, 58, 0.2); /* Brown Coffee with opacity */
   border-radius: 10px;
   outline: none;
   transition: background-color 0.2s ease;
@@ -75,33 +78,33 @@
   display: block;
 }
 
-/* Webkit (Chrome/Safari) progress bar thumb - Blaze Orange */
+/* Webkit progress bar thumb - Dark Raspberry */
 #progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--accent-primary);
+  background: var(--accent-primary); /* Dark Raspberry */
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   box-shadow: var(--shadow-card);
   margin-top: -5px;
 }
 
-/* Thumb hover: Orange Yellow */
+/* Thumb hover: Pearly Purple */
 #progress-bar::-webkit-slider-thumb:hover {
-  background: var(--accent-secondary);
+  background: var(--accent-hover); /* Pearly Purple */
   box-shadow: var(--shadow-hover);
 }
 
-/* Thumb active: scale 1.05 */
+/* Thumb active: scale */
 #progress-bar::-webkit-slider-thumb:active {
   transform: scale(1.05);
-  background: var(--accent-secondary);
+  background: var(--accent-primary);
 }
 
-/* Firefox progress bar thumb - Blaze Orange */
+/* Firefox progress bar thumb */
 #progress-bar::-moz-range-thumb {
   width: 18px;
   height: 18px;
@@ -114,23 +117,23 @@
 }
 
 #progress-bar::-moz-range-thumb:hover {
-  background: var(--accent-secondary);
+  background: var(--accent-hover);
   box-shadow: var(--shadow-hover);
 }
 
 #progress-bar::-moz-range-thumb:active {
   transform: scale(1.05);
-  background: var(--accent-secondary);
+  background: var(--accent-primary);
 }
 
-/* Firefox progress bar track - Blaze Orange */
+/* Firefox progress bar track */
 #progress-bar::-moz-range-track {
   height: 8px;
   border-radius: 10px;
   background: var(--accent-primary);
 }
 
-/* Webkit progress bar track - Blaze Orange */
+/* Webkit progress bar track */
 #progress-bar::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 10px;
@@ -143,8 +146,8 @@
   font-size: 13px;
   margin-top: 8px;
   padding: 0 4px;
-  color: var(--text-primary);
-  font-weight: 500;
+  color: var(--text-light); /* Classic Rose */
+  font-weight: 600;
 }
 
 /* DLL Toggle wrapper */

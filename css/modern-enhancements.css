@@ -1,13 +1,11 @@
 /* ============================================
    PREMIUM MUSIC PLAYER - MICRO-INTERACTIONS
    Production-Ready Animations
+   Color Palette: Purple/Rose Theme ONLY
 ============================================ */
 
 :root {
-  --primary: #ff6b35;
-  --secondary: #f7931e;
-  --tertiary: #fbb03b;
-  --accent: #e63946;
+  /* Removed old color variables - use base.css palette instead */
   --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -35,17 +33,17 @@
 }
 
 .header {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 50%, var(--secondary) 100%);
+  background: var(--japanese-violet);
   margin: -20px -20px 30px -20px;
   padding: 24px 20px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 4px 20px rgba(80, 42, 80, 0.3);
   position: relative;
   overflow: hidden;
   animation: fadeInUp 0.5s var(--easing-smooth);
 }
 
-/* Animated gradient shimmer */
+/* Animated shimmer */
 .header::before {
   content: '';
   position: absolute;
@@ -55,7 +53,7 @@
   height: 200%;
   background: linear-gradient(90deg, 
     transparent 0%,
-    rgba(255, 255, 255, 0.15) 50%,
+    rgba(186, 113, 162, 0.15) 50%,
     transparent 100%);
   animation: headerShine 3s ease-in-out infinite;
 }
@@ -66,10 +64,10 @@
 }
 
 .header h1 {
-  color: #FFFFFF;
+  color: var(--classic-rose);
   font-size: 36px;
   font-weight: 700;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(70, 29, 58, 0.3);
   letter-spacing: 1px;
   position: relative;
   z-index: 1;
@@ -79,9 +77,9 @@
 .header .theory-btn {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
+  background: rgba(186, 113, 162, 0.2);
+  border: 2px solid rgba(186, 113, 162, 0.3);
+  color: var(--classic-rose);
   backdrop-filter: blur(10px);
   font-weight: 600;
   padding: 10px 20px;
@@ -89,10 +87,10 @@
 }
 
 .header .theory-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(186, 113, 162, 0.3);
+  border-color: rgba(186, 113, 162, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(70, 29, 58, 0.2);
 }
 
 .header .theory-btn:active {
@@ -113,7 +111,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 8px 32px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 8px 32px rgba(126, 42, 83, 0.3);
   transition: all 0.4s var(--easing-smooth);
   position: relative;
   z-index: 2;
@@ -139,18 +137,12 @@
   100% { transform: rotate(var(--stop-angle, 0deg)); }
 }
 
-/* Vinyl record with grooves */
+/* Vinyl record with single color glow */
 .cover::before {
   content: '';
   position: absolute;
   inset: -15px;
-  background: 
-    conic-gradient(from 0deg,
-      var(--accent) 0deg,
-      var(--primary) 90deg,
-      var(--secondary) 180deg,
-      var(--primary) 270deg,
-      var(--accent) 360deg);
+  background: var(--dark-raspberry);
   border-radius: 50%;
   z-index: 1;
   opacity: 0.6;
@@ -168,8 +160,8 @@
     circle at center,
     transparent 0px,
     transparent 2px,
-    rgba(0, 0, 0, 0.05) 2px,
-    rgba(0, 0, 0, 0.05) 3px
+    rgba(70, 29, 58, 0.05) 2px,
+    rgba(70, 29, 58, 0.05) 3px
   );
   z-index: 0;
   pointer-events: none;
@@ -189,7 +181,7 @@
 /* Hover zoom effect */
 .cover:hover img {
   transform: scale(1.08);
-  box-shadow: 0 12px 40px rgba(230, 57, 70, 0.5);
+  box-shadow: 0 12px 40px rgba(126, 42, 83, 0.5);
 }
 
 .cover.playing:hover img {
@@ -207,7 +199,7 @@
   animation: fadeInUp 0.7s var(--easing-smooth) 0.3s backwards;
 }
 
-/* Base button styles with gradient backgrounds */
+/* Base button styles with solid backgrounds */
 .controls button {
   position: relative;
   overflow: visible;
@@ -217,8 +209,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  background: var(--dark-raspberry);
+  box-shadow: 0 4px 12px rgba(126, 42, 83, 0.3);
   backdrop-filter: blur(10px);
   will-change: transform;
   width: 52px;
@@ -230,11 +222,11 @@
 .btn-icon {
   width: 20px;
   height: 20px;
-  color: white;
+  color: var(--classic-rose);
   transition: all 0.3s var(--easing-smooth);
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 2px rgba(70, 29, 58, 0.2));
 }
 
 /* Ripple effect on all buttons */
@@ -246,7 +238,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(236, 208, 236, 0.4);
   transform: translate(-50%, -50%);
   transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
   opacity: 0;
@@ -267,7 +259,7 @@
   position: absolute;
   inset: -2px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+  background: rgba(186, 113, 162, 0.3);
   opacity: 0;
   transition: opacity 0.3s var(--easing-smooth);
   pointer-events: none;
@@ -281,20 +273,20 @@
 /* Base hover state */
 .controls button:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3);
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+  box-shadow: 0 8px 24px rgba(126, 42, 83, 0.5), 0 0 20px rgba(126, 42, 83, 0.3);
+  background: var(--pearly-purple);
 }
 
 /* Pressed state - tactile feedback */
 .controls button:active {
   transform: translateY(-1px) scale(0.95);
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 2px 8px rgba(126, 42, 83, 0.4);
   transition: all 0.1s var(--easing-smooth);
 }
 
 /* Focus state for accessibility */
 .controls button:focus-visible {
-  outline: 3px solid rgba(255, 107, 53, 0.5);
+  outline: 3px solid rgba(126, 42, 83, 0.5);
   outline-offset: 3px;
 }
 
@@ -302,8 +294,8 @@
 #play-btn {
   width: 68px;
   height: 68px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4), 0 0 0 0 rgba(255, 107, 53, 0.7);
+  background: var(--dark-raspberry);
+  box-shadow: 0 6px 20px rgba(126, 42, 83, 0.4), 0 0 0 0 rgba(126, 42, 83, 0.7);
   animation: breathe 2.5s ease-in-out infinite;
   z-index: 10;
 }
@@ -315,16 +307,16 @@
 
 @keyframes breathe {
   0%, 100% { 
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4), 0 0 0 0 rgba(255, 107, 53, 0.7);
+    box-shadow: 0 6px 20px rgba(126, 42, 83, 0.4), 0 0 0 0 rgba(126, 42, 83, 0.7);
   }
   50% { 
-    box-shadow: 0 8px 28px rgba(255, 107, 53, 0.6), 0 0 0 12px rgba(255, 107, 53, 0);
+    box-shadow: 0 8px 28px rgba(126, 42, 83, 0.6), 0 0 0 12px rgba(126, 42, 83, 0);
   }
 }
 
 #play-btn:hover {
   transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 12px 32px rgba(255, 107, 53, 0.6), 0 0 30px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 12px 32px rgba(126, 42, 83, 0.6), 0 0 30px rgba(126, 42, 83, 0.4);
   animation: none;
 }
 
@@ -334,18 +326,18 @@
 
 #play-btn:active {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.5);
+  box-shadow: 0 4px 16px rgba(126, 42, 83, 0.5);
 }
 
 /* Playing state */
 #play-btn.playing {
   animation: none;
-  background: linear-gradient(135deg, var(--accent) 0%, #c62937 100%);
-  box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+  background: var(--brown-coffee);
+  box-shadow: 0 6px 20px rgba(70, 29, 58, 0.4);
 }
 
 #play-btn.playing:hover {
-  box-shadow: 0 12px 32px rgba(230, 57, 70, 0.6), 0 0 30px rgba(230, 57, 70, 0.4);
+  box-shadow: 0 12px 32px rgba(70, 29, 58, 0.6), 0 0 30px rgba(70, 29, 58, 0.4);
 }
 
 /* Icon morph animation */
@@ -366,8 +358,8 @@
 #shuffle-btn {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #2c9fc7 0%, #1e7a9c 100%);
-  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+  background: var(--japanese-violet);
+  box-shadow: 0 4px 12px rgba(80, 42, 80, 0.3);
   opacity: 0.85;
 }
 
@@ -378,8 +370,8 @@
 
 #shuffle-btn:hover {
   opacity: 1;
-  background: linear-gradient(135deg, #3db3dc 0%, #2c9fc7 100%);
-  box-shadow: 0 8px 24px rgba(44, 159, 199, 0.5), 0 0 20px rgba(44, 159, 199, 0.3);
+  background: var(--pearly-purple);
+  box-shadow: 0 8px 24px rgba(80, 42, 80, 0.5), 0 0 20px rgba(80, 42, 80, 0.3);
   transform: translateY(-3px) scale(1.05) rotate(15deg);
 }
 
@@ -394,8 +386,8 @@
 /* Shuffle active state */
 #shuffle-btn.active {
   opacity: 1;
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.5);
+  background: var(--dark-raspberry);
+  box-shadow: 0 6px 20px rgba(126, 42, 83, 0.5);
   animation: shuffleActive 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -419,8 +411,8 @@
 #next-btn {
   width: 52px;
   height: 52px;
-  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%);
-  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+  background: var(--japanese-violet);
+  box-shadow: 0 4px 12px rgba(80, 42, 80, 0.3);
 }
 
 #prev-btn .btn-icon,
@@ -431,8 +423,8 @@
 
 #prev-btn:hover,
 #next-btn:hover {
-  background: linear-gradient(135deg, #3db3dc 0%, #2c9fc7 100%);
-  box-shadow: 0 8px 24px rgba(44, 159, 199, 0.5), 0 0 20px rgba(44, 159, 199, 0.3);
+  background: var(--pearly-purple);
+  box-shadow: 0 8px 24px rgba(80, 42, 80, 0.5), 0 0 20px rgba(80, 42, 80, 0.3);
   transform: translateY(-3px) scale(1.05);
 }
 
@@ -461,12 +453,12 @@
 }
 
 /* ========== DELETE BUTTON ========== */
-/* Blue by default (matches other player buttons), Red Wine on hover */
+/* Japanese Violet by default, Brown Coffee on hover */
 #delete-btn {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%); /* Blue like prev/next */
-  box-shadow: 0 4px 12px rgba(44, 159, 199, 0.3);
+  background: var(--japanese-violet);
+  box-shadow: 0 4px 12px rgba(80, 42, 80, 0.3);
   opacity: 1;
   /* Ensure icon is centered */
   display: flex;
@@ -475,19 +467,19 @@
   transition: all 0.3s var(--easing-smooth);
 }
 
-/* White trash can icon - simple Unicode icon for guaranteed visibility */
+/* Icon styling */
 #delete-btn .delete-icon {
   font-size: 20px;
-  color: white;
+  color: var(--classic-rose);
   display: block;
   line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 2px rgba(70, 29, 58, 0.2));
 }
 
-/* Hover: changes to Red Wine background */
+/* Hover: changes to Brown Coffee background */
 #delete-btn:hover {
-  background: #A1081F; /* Red Wine - solid color */
-  box-shadow: 0 8px 24px rgba(161, 8, 31, 0.5), 0 0 20px rgba(161, 8, 31, 0.3);
+  background: var(--brown-coffee);
+  box-shadow: 0 8px 24px rgba(70, 29, 58, 0.5), 0 0 20px rgba(70, 29, 58, 0.3);
   transform: translateY(-3px) scale(1.05);
   animation: shake 0.5s var(--easing-smooth);
 }
@@ -510,8 +502,8 @@
 
 /* Active: subtle scale down for tactile feedback */
 #delete-btn:active {
-  transform: translateY(-1px) scale(0.96); /* Subtle scale down */
-  background: #850418; /* Darker Red Wine for pressed state */
+  transform: translateY(-1px) scale(0.96);
+  background: var(--brown-coffee);
   animation: none;
 }
 
@@ -521,7 +513,7 @@
   cursor: not-allowed;
   filter: grayscale(0.8);
   pointer-events: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgba(70, 29, 58, 0.15);
   transform: scale(0.95);
 }
 
@@ -547,12 +539,12 @@
 @keyframes successPulse {
   0%, 100% { 
     transform: scale(1);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 4px 12px rgba(126, 42, 83, 0.4);
   }
   50% { 
     transform: scale(1.15);
-    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.6);
-    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    box-shadow: 0 8px 24px rgba(126, 42, 83, 0.6);
+    background: var(--dark-raspberry);
   }
 }
 
@@ -569,8 +561,8 @@
 
 .controls button.error {
   animation: errorShake 0.5s var(--easing-smooth);
-  background: linear-gradient(135deg, #e63946 0%, #c62937 100%);
-  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.5);
+  background: var(--brown-coffee);
+  box-shadow: 0 4px 12px rgba(70, 29, 58, 0.5);
 }
 
 /* ========== OVERRIDE BASE PLAYER.CSS STYLES ========== */
@@ -578,7 +570,6 @@
 .controls button {
   width: 52px !important;
   height: 52px !important;
-  /* font-size: 0 removed to allow SVG icons to display */
 }
 
 #shuffle-btn {
@@ -586,23 +577,22 @@
   height: 48px !important;
 }
 
-/* Blue background for delete button (same as other buttons) */
 #delete-btn {
   width: 48px !important;
   height: 48px !important;
-  background: linear-gradient(135deg, #2c9fc7 0%, #2489ad 100%) !important;
+  background: var(--japanese-violet) !important;
 }
 
 #play-btn {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) !important;
+  background: var(--dark-raspberry) !important;
 }
 
 #play-btn.playing {
-  background: linear-gradient(135deg, var(--accent) 0%, #c62937 100%) !important;
+  background: var(--brown-coffee) !important;
 }
 
 #shuffle-btn.active {
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
+  background: var(--dark-raspberry) !important;
 }
 
 /* ========== PLAYLIST ITEMS - MICRO-INTERACTIONS ========== */
@@ -654,7 +644,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(251, 176, 59, 0.5);
+  background: rgba(186, 113, 162, 0.5);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
   pointer-events: none;
@@ -675,15 +665,15 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 18px;
-  color: var(--primary);
+  color: var(--dark-raspberry);
   transition: all 0.3s var(--easing-smooth);
   opacity: 0;
 }
 
 #playlist li:hover {
-  background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+  background: rgba(236, 208, 236, 0.3);
   transform: translateX(8px);
-  box-shadow: -4px 4px 12px rgba(255, 107, 53, 0.15);
+  box-shadow: -4px 4px 12px rgba(126, 42, 83, 0.15);
 }
 
 #playlist li:hover::after {
@@ -691,25 +681,25 @@
   opacity: 1;
 }
 
-/* Active song with gradient and pulse */
+/* Active song with pulse */
 #playlist li.active {
-  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-  color: white;
+  background: var(--dark-raspberry);
+  color: var(--classic-rose);
   font-weight: 600;
   transform: scale(1.02);
-  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 4px 16px rgba(126, 42, 83, 0.4);
   animation: activeItemPulse 2s ease-in-out infinite;
 }
 
 @keyframes activeItemPulse {
-  0%, 100% { box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4); }
-  50% { box-shadow: 0 6px 24px rgba(255, 107, 53, 0.6); }
+  0%, 100% { box-shadow: 0 4px 16px rgba(126, 42, 83, 0.4); }
+  50% { box-shadow: 0 6px 24px rgba(126, 42, 83, 0.6); }
 }
 
 #playlist li.active::after {
   right: 18px;
   opacity: 1;
-  color: white;
+  color: var(--classic-rose);
   animation: musicNote 1s ease-in-out infinite;
 }
 
@@ -725,10 +715,10 @@
 
 @keyframes selectTransition {
   0% { background: transparent; }
-  50% { background: rgba(255, 107, 53, 0.2); transform: scale(1.05); }
+  50% { background: rgba(126, 42, 83, 0.2); transform: scale(1.05); }
   100% { 
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-    color: white;
+    background: var(--dark-raspberry);
+    color: var(--classic-rose);
   }
 }
 
@@ -763,7 +753,7 @@
 
 #playlist li.error {
   animation: itemShake 0.5s var(--easing-smooth);
-  background: rgba(230, 57, 70, 0.1);
+  background: rgba(70, 29, 58, 0.1);
 }
 
 /* ========== PROGRESS BAR - ADVANCED INTERACTIONS ========== */
@@ -778,7 +768,7 @@
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: #E5D9C6;
+  background: rgba(236, 208, 236, 0.3);
   border-radius: 10px;
   outline: none;
   cursor: pointer;
@@ -795,9 +785,9 @@
 #progress-bar.buffering {
   background: linear-gradient(
     90deg,
-    #E5D9C6 25%,
-    #f0e6d6 50%,
-    #E5D9C6 75%
+    rgba(236, 208, 236, 0.3) 25%,
+    rgba(186, 113, 162, 0.3) 50%,
+    rgba(236, 208, 236, 0.3) 75%
   );
   background-size: 200% 100%;
   animation: bufferShimmer 1.5s linear infinite;
@@ -814,33 +804,33 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--dark-raspberry);
   cursor: pointer;
-  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2),
-              0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 4px rgba(126, 42, 83, 0.2),
+              0 2px 8px rgba(70, 29, 58, 0.2);
   transition: all 0.2s var(--easing-smooth);
 }
 
 #progress-bar::-webkit-slider-thumb:hover {
   transform: scale(1.4);
-  box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.3),
-              0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 8px rgba(126, 42, 83, 0.3),
+              0 4px 12px rgba(70, 29, 58, 0.3);
 }
 
 #progress-bar::-webkit-slider-thumb:active {
   transform: scale(1.2);
-  box-shadow: 0 0 0 12px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 0 0 12px rgba(126, 42, 83, 0.4);
 }
 
 #progress-bar::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--dark-raspberry);
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2),
-              0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 4px rgba(126, 42, 83, 0.2),
+              0 2px 8px rgba(70, 29, 58, 0.2);
   transition: all 0.2s var(--easing-smooth);
 }
 
@@ -848,21 +838,17 @@
   transform: scale(1.4);
 }
 
-/* Animated gradient on track */
+/* Solid color on track */
 #progress-bar::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 10px;
-  background: linear-gradient(90deg, 
-    var(--primary) 0%, 
-    var(--secondary) 100%);
+  background: var(--dark-raspberry);
 }
 
 #progress-bar::-moz-range-track {
   height: 6px;
   border-radius: 10px;
-  background: linear-gradient(90deg, 
-    var(--primary) 0%, 
-    var(--secondary) 100%);
+  background: var(--dark-raspberry);
 }
 
 /* Time tooltip */
@@ -871,8 +857,8 @@
   bottom: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%) translateY(-4px);
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
+  background: var(--brown-coffee);
+  color: var(--classic-rose);
   padding: 8px 14px;
   border-radius: 8px;
   font-size: 13px;
@@ -891,7 +877,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.9);
+  border-top-color: var(--brown-coffee);
 }
 
 .progress-wrapper:hover .progress-tooltip {
@@ -928,7 +914,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(236, 208, 236, 0.6);
   transform: translate(-50%, -50%);
   transition: width 0.5s, height 0.5s;
 }
@@ -940,7 +926,7 @@
 
 .controls button:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(44, 159, 199, 0.4);
+  box-shadow: 0 8px 20px rgba(80, 42, 80, 0.4);
 }
 
 .controls button:active {
@@ -956,8 +942,8 @@
   display: inline-block;
   padding: 12px 20px;
   margin: 8px;
-  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
-  border: 2px solid var(--tertiary);
+  background: var(--classic-rose);
+  border: 2px solid var(--pearly-purple);
   border-radius: 12px;
   font-weight: 600;
   position: relative;
@@ -982,21 +968,21 @@
 
 /* Current node with gentle pulse */
 .dll-node.active {
-  background: linear-gradient(135deg, var(--secondary), var(--primary));
-  color: white;
-  border-color: var(--primary);
-  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+  background: var(--dark-raspberry);
+  color: var(--classic-rose);
+  border-color: var(--dark-raspberry);
+  box-shadow: 0 4px 20px rgba(126, 42, 83, 0.4);
   animation: nodePulse 2s ease-in-out infinite;
 }
 
 @keyframes nodePulse {
   0%, 100% { 
     transform: scale(1);
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 4px 20px rgba(126, 42, 83, 0.4);
   }
   50% { 
     transform: scale(1.05);
-    box-shadow: 0 6px 28px rgba(255, 107, 53, 0.6);
+    box-shadow: 0 6px 28px rgba(126, 42, 83, 0.6);
   }
 }
 
@@ -1023,7 +1009,7 @@
 .arrow {
   display: inline-block;
   margin: 0 8px;
-  color: var(--tertiary);
+  color: var(--pearly-purple);
   font-size: 20px;
   transition: all 0.3s var(--easing-smooth);
 }
@@ -1031,13 +1017,13 @@
 /* Light up arrows during traversal */
 @keyframes arrowGlow {
   0%, 100% { 
-    color: var(--tertiary);
+    color: var(--pearly-purple);
     transform: scale(1);
   }
   50% { 
-    color: var(--primary);
+    color: var(--dark-raspberry);
     transform: scale(1.3);
-    text-shadow: 0 0 10px rgba(255, 107, 53, 0.6);
+    text-shadow: 0 0 10px rgba(126, 42, 83, 0.6);
   }
 }
 
@@ -1048,8 +1034,8 @@
 /* Pointer boxes animation */
 .pointer-box {
   padding: 10px 16px;
-  background: linear-gradient(135deg, var(--tertiary), var(--secondary));
-  color: #333;
+  background: var(--pearly-purple);
+  color: var(--brown-coffee);
   border-radius: 8px;
   font-weight: 600;
   margin: 8px;
@@ -1058,16 +1044,16 @@
 
 .pointer-box:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(251, 176, 59, 0.3);
+  box-shadow: 0 4px 12px rgba(186, 113, 162, 0.3);
 }
 
 /* Circular indicator */
 .circular-arrow {
   margin-top: 16px;
   padding: 12px;
-  background: rgba(255, 107, 53, 0.1);
+  background: rgba(126, 42, 83, 0.1);
   border-radius: 8px;
-  color: var(--primary);
+  color: var(--dark-raspberry);
   font-weight: 600;
   animation: fadeIn 0.5s var(--easing-smooth) 0.6s backwards;
 }
@@ -1081,9 +1067,9 @@
 .playlist-sidebar,
 .player-section,
 .dll-visualization {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBF5 100%);
+  background: var(--classic-rose);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(70, 29, 58, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -1100,7 +1086,7 @@
   height: 100%;
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(251, 183, 40, 0.1), 
+    rgba(186, 113, 162, 0.1), 
     transparent);
   transition: left 0.6s ease;
 }
@@ -1114,7 +1100,7 @@
 .playlist-sidebar:hover,
 .player-section:hover,
 .dll-visualization:hover {
-  box-shadow: 0 12px 48px rgba(240, 107, 4, 0.15);
+  box-shadow: 0 12px 48px rgba(126, 42, 83, 0.15);
   transform: translateY(-4px);
 }
 
@@ -1124,16 +1110,16 @@
   position: relative;
   width: 100%;
   margin-bottom: 16px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--dark-raspberry);
   font-weight: 600;
-  overflow: visible; /* Changed from hidden to show rotated icon */
+  overflow: visible;
   transition: all 0.3s var(--easing-smooth);
   
   /* Flexbox for centered alignment */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Consistent spacing between icon and text */
+  gap: 8px;
 }
 
 /* Remove absolute positioning from icon */
@@ -1142,7 +1128,6 @@
   font-size: 24px;
   font-weight: 700;
   transition: transform 0.3s var(--easing-bounce);
-  /* Position is now handled by flexbox */
 }
 
 #add-song-btn:hover::before {
@@ -1150,7 +1135,7 @@
 }
 
 #add-song-btn:hover {
-  box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 6px 24px rgba(126, 42, 83, 0.4);
   transform: translateY(-2px);
 }
 
@@ -1167,10 +1152,7 @@
   font-size: 28px;
   font-weight: 700;
   margin: 16px 0 8px;
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--brown-coffee);
   animation: titleShine 3s ease-in-out infinite;
 }
 
@@ -1180,7 +1162,7 @@
 }
 
 #song-artist {
-  color: #666;
+  color: var(--japanese-violet);
   font-size: 16px;
   font-weight: 500;
   opacity: 0.9;
@@ -1199,20 +1181,20 @@
   font-size: 13px;
   margin-top: 8px;
   padding: 0 4px;
-  color: #333;
+  color: var(--brown-coffee);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
 .time-info span {
-  background: rgba(255, 107, 53, 0.1);
+  background: rgba(126, 42, 83, 0.1);
   padding: 4px 10px;
   border-radius: 6px;
   transition: all 0.2s var(--easing-smooth);
 }
 
 .time-info span:hover {
-  background: rgba(255, 107, 53, 0.2);
+  background: rgba(126, 42, 83, 0.2);
   transform: scale(1.05);
 }
 
@@ -1221,14 +1203,14 @@
   position: relative;
   width: 100%;
   margin-top: 24px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--dark-raspberry);
   font-weight: 600;
   overflow: hidden;
   transition: all 0.3s var(--easing-smooth);
   padding: 14px 28px;
   font-size: 15px;
   border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 4px 16px rgba(126, 42, 83, 0.3);
 }
 
 #toggle-dll::before {
@@ -1240,14 +1222,14 @@
   height: 100%;
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(255, 255, 255, 0.2), 
+    rgba(236, 208, 236, 0.2), 
     transparent);
   transition: left 0.6s ease;
 }
 
 #toggle-dll:hover {
-  background: linear-gradient(135deg, var(--secondary), var(--tertiary));
-  box-shadow: 0 6px 24px rgba(255, 107, 53, 0.5);
+  background: var(--pearly-purple);
+  box-shadow: 0 6px 24px rgba(126, 42, 83, 0.5);
   transform: translateY(-3px);
 }
 
@@ -1257,17 +1239,17 @@
 
 #toggle-dll:active {
   transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 3px 12px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 3px 12px rgba(126, 42, 83, 0.4);
 }
 
 /* Active state when DLL view is visible */
 #toggle-dll.active {
-  background: linear-gradient(135deg, var(--accent), #c62937);
-  box-shadow: 0 6px 24px rgba(230, 57, 70, 0.5);
+  background: var(--brown-coffee);
+  box-shadow: 0 6px 24px rgba(70, 29, 58, 0.5);
 }
 
 #toggle-dll.active:hover {
-  background: linear-gradient(135deg, #c62937, #a01f2b);
+  background: var(--brown-coffee);
 }
 
 /* ========== EMPTY STATE ========== */
@@ -1290,13 +1272,13 @@
 }
 
 .empty-state h3 {
-  color: #666;
+  color: var(--japanese-violet);
   font-size: 20px;
   margin-bottom: 10px;
 }
 
 .empty-state p {
-  color: #999;
+  color: var(--pearly-purple);
   font-size: 14px;
 }
 
@@ -1390,7 +1372,7 @@
 
 /* ========== LOADING STATES & SKELETONS ========== */
 .cover img.loading {
-  background: linear-gradient(90deg, #E5D9C6 25%, #F9F3E8 50%, #E5D9C6 75%);
+  background: linear-gradient(90deg, rgba(236, 208, 236, 0.3) 25%, rgba(186, 113, 162, 0.2) 50%, rgba(236, 208, 236, 0.3) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }
@@ -1403,7 +1385,7 @@
 /* Skeleton loader for playlist */
 .playlist-skeleton {
   height: 48px;
-  background: linear-gradient(90deg, #F9F3E8 25%, #FFFFFF 50%, #F9F3E8 75%);
+  background: linear-gradient(90deg, rgba(186, 113, 162, 0.2) 25%, rgba(236, 208, 236, 0.3) 50%, rgba(186, 113, 162, 0.2) 75%);
   background-size: 200% 100%;
   border-radius: 12px;
   margin-bottom: 10px;
@@ -1448,11 +1430,11 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  color: white;
+  background: var(--dark-raspberry);
+  color: var(--classic-rose);
   padding: 16px 24px;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.4), 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(126, 42, 83, 0.4), 0 4px 16px rgba(70, 29, 58, 0.2);
   z-index: 10000;
   opacity: 0;
   transform: translateY(-20px) scale(0.9);
@@ -1480,7 +1462,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(236, 208, 236, 0.2);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -1516,7 +1498,7 @@
 }
 
 .delete-confirm-modal h2 {
-  color: #A1081F;
+  color: var(--brown-coffee);
   margin-bottom: 10px;
 }
 
@@ -1537,7 +1519,7 @@
 
 .modal-buttons button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(70, 29, 58, 0.2);
 }
 
 .modal-buttons button:active {
