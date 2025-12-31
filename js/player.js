@@ -38,14 +38,21 @@ prevBtn.onclick = () => {
 
 audio.addEventListener("loadedmetadata", () => {
   durationEl.textContent = format(audio.duration);
+  // Sync lyrics on load
+  updateLyrics();
 });
 
 audio.addEventListener("timeupdate", () => {
   progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
   currentTimeEl.textContent = format(audio.currentTime);
   
-  // Sync lyrics with current time
-  syncLyrics(audio.currentTime);
+  // Sync lyrics on every time update
+  updateLyrics();
+});
+
+// Critical: handle seeking/scrubbing
+audio.addEventListener("seeked", () => {
+  updateLyrics();
 });
 
 progressBar.oninput = () => {
@@ -73,43 +80,94 @@ audio.addEventListener("ended", () => {
 // ===============================
 // LYRICS SYNC FUNCTIONALITY
 // ===============================
-function syncLyrics(currentTime) {
-  const lyricLines = document.querySelectorAll('.lyric-line');
-  if (lyricLines.length === 0) return;
+
+/**
+ * PURE FUNCTION: Calculate active lyric index from current time
+ * 
+ * WHY THIS IS SEEK-SAFE:
+ * - Does NOT store state or increment counters
+ * - Recalculates from scratch every call
+ * - Works for forward seek, backward seek, and rapid scrubbing
+ * 
+ * @param {number} currentTime - audio.currentTime in seconds
+ * @param {Array} lyrics - array of { time, text } objects
+ * @returns {number} index of active lyric, or -1 if none active
+ */
+function getActiveLyricIndex(currentTime, lyrics) {
+  if (!lyrics || lyrics.length === 0) return -1;
   
   let activeIndex = -1;
   
-  // Find the active lyric line based on current time
-  lyricLines.forEach((line, index) => {
-    const lineTime = parseFloat(line.dataset.time);
-    const nextLine = lyricLines[index + 1];
-    const nextTime = nextLine ? parseFloat(nextLine.dataset.time) : Infinity;
-    
-    // Current time is between this line and the next
-    if (currentTime >= lineTime && currentTime < nextTime) {
-      activeIndex = index;
+  // Find the LAST lyric whose time <= currentTime
+  for (let i = 0; i < lyrics.length; i++) {
+    if (lyrics[i].time <= currentTime) {
+      activeIndex = i;
+    } else {
+      // Lyrics are sorted by time, so we can stop early
+      break;
     }
-  });
+  }
   
-  // Update active class
+  return activeIndex;
+}
+
+// Track last active index to prevent unnecessary scrolling
+let lastActiveLyricIndex = -1;
+
+/**
+ * Reset lyrics state when song changes
+ * Called from ui.js when renderLyrics() is invoked
+ */
+function resetLyricsState() {
+  lastActiveLyricIndex = -1;
+}
+
+/**
+ * Update lyrics display based on current audio time
+ * Called from: timeupdate, seeked, loadedmetadata
+ */
+function updateLyrics() {
+  const lyricLines = document.querySelectorAll('.lyric-line');
+  if (lyricLines.length === 0) return;
+  
+  // Build lyrics array from DOM (with time from data attributes)
+  const lyrics = Array.from(lyricLines).map(line => ({
+    time: parseFloat(line.dataset.time)
+  }));
+  
+  // Calculate active index from current time (PURE - no state)
+  const activeIndex = getActiveLyricIndex(audio.currentTime, lyrics);
+  
+  // Update DOM: remove all active classes, add to computed index
   lyricLines.forEach((line, index) => {
     if (index === activeIndex) {
       line.classList.add('active');
-      
-      // Auto-scroll to keep active line centered
+    } else {
+      line.classList.remove('active');
+    }
+  });
+  
+  // Scroll ONLY when active lyric chan
+    window.lastActiveLyricIndex = activeIndex; // Keep global in syncges (prevents jitter)
+  if (activeIndex !== lastActiveLyricIndex) {
+    lastActiveLyricIndex = activeIndex;
+    
+    if (activeIndex >= 0) {
+      const activeLine = lyricLines[activeIndex];
       const container = document.getElementById('lyrics-container');
-      if (container) {
-        // Use scrollIntoView for more reliable scrolling
+      
+      if (container && activeLine) {
+        // Use requestAnimationFrame for smooth scrolling
         requestAnimationFrame(() => {
-          line.scrollIntoView({
+          activeLine.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
             inline: 'nearest'
           });
         });
       }
-    } else {
-      line.classList.remove('active');
     }
-  });
+  }
 }
+
+

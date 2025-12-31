@@ -106,8 +106,13 @@ function renderLyrics(song) {
     lyricsContainer.appendChild(line);
   });
   
-  // Reset scroll position
+  // Reset scroll position and active index tracker
   lyricsContainer.scrollTop = 0;
+  
+  // Reset the active lyric tracker when song changes
+  if (typeof resetLyricsState === 'function') {
+    resetLyricsState();
+  }
 }
 
 // ===============================
