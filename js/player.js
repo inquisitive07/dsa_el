@@ -43,6 +43,9 @@ audio.addEventListener("loadedmetadata", () => {
 audio.addEventListener("timeupdate", () => {
   progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
   currentTimeEl.textContent = format(audio.currentTime);
+  
+  // Sync lyrics with current time
+  syncLyrics(audio.currentTime);
 });
 
 progressBar.oninput = () => {
@@ -66,3 +69,47 @@ audio.addEventListener("ended", () => {
     }
   }
 });
+
+// ===============================
+// LYRICS SYNC FUNCTIONALITY
+// ===============================
+function syncLyrics(currentTime) {
+  const lyricLines = document.querySelectorAll('.lyric-line');
+  if (lyricLines.length === 0) return;
+  
+  let activeIndex = -1;
+  
+  // Find the active lyric line based on current time
+  lyricLines.forEach((line, index) => {
+    const lineTime = parseFloat(line.dataset.time);
+    const nextLine = lyricLines[index + 1];
+    const nextTime = nextLine ? parseFloat(nextLine.dataset.time) : Infinity;
+    
+    // Current time is between this line and the next
+    if (currentTime >= lineTime && currentTime < nextTime) {
+      activeIndex = index;
+    }
+  });
+  
+  // Update active class
+  lyricLines.forEach((line, index) => {
+    if (index === activeIndex) {
+      line.classList.add('active');
+      
+      // Auto-scroll to keep active line centered
+      const container = document.getElementById('lyrics-container');
+      if (container) {
+        // Use scrollIntoView for more reliable scrolling
+        requestAnimationFrame(() => {
+          line.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+          });
+        });
+      }
+    } else {
+      line.classList.remove('active');
+    }
+  });
+}

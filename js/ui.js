@@ -8,6 +8,9 @@ const coverImg = document.getElementById("cover-image");
 const titleEl = document.getElementById("song-title");
 const artistEl = document.getElementById("song-artist");
 
+// Lyrics elements
+const lyricsContainer = document.getElementById("lyrics-container");
+
 // Pointer boxes (HEAD / CURRENT / TAIL)
 const pointerBoxes = document.querySelectorAll(".pointer-box");
 
@@ -72,7 +75,39 @@ function updateNowPlaying(node) {
     // Trigger fade-in after image loads
     coverImg.classList.remove('fade-out');
     coverImg.classList.add('fade-in');
+    
+    // Update lyrics for new song
+    renderLyrics(node.song);
   }, 250);
+}
+
+// ===============================
+// LYRICS RENDERING
+// ===============================
+function renderLyrics(song) {
+  lyricsContainer.innerHTML = "";
+  
+  // Check if lyrics exist
+  if (!song.lyrics || song.lyrics.length === 0) {
+    const placeholder = document.createElement("p");
+    placeholder.className = "lyrics-placeholder";
+    placeholder.textContent = "Lyrics not available";
+    lyricsContainer.appendChild(placeholder);
+    return;
+  }
+  
+  // Render each lyric line
+  song.lyrics.forEach((lyric, index) => {
+    const line = document.createElement("div");
+    line.className = "lyric-line";
+    line.textContent = lyric.text;
+    line.dataset.time = lyric.time;
+    line.dataset.index = index;
+    lyricsContainer.appendChild(line);
+  });
+  
+  // Reset scroll position
+  lyricsContainer.scrollTop = 0;
 }
 
 // ===============================
