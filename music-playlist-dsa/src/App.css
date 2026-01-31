@@ -18,12 +18,13 @@ body {
 }
 
 /* Header Styles */
+/* Header Styles */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 25px 40px;
-  background: linear-gradient(135deg, #ff79da, #f093fb);
+  background: rgba(195, 166, 232, 0.9); /* light pink full width */
   backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-bottom: 30px;
@@ -31,16 +32,16 @@ body {
 }
 
 .app-header h1 {
-  background: white;
-  padding: 14px 34px;
-  border-radius: 40px;
-  color: #764ba2;
+  background: transparent;   /* removes internal colouring */
+  padding: 0;                /* removes pill spacing */
+  border-radius: 0;          /* no rounded capsule */
+  color: #4b3a73;          /* keeps the purple-pink text */
   font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
   text-align: center;
   margin: 0 auto;
+  box-shadow: none;          /* removes inner glow/shadow */
 }
 
 .header-actions {
@@ -88,7 +89,7 @@ body {
 
 /* Data Structure Info Panel */
 .ds-info-panel {
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, #f6e7fb, #f1c6ff);
   backdrop-filter: blur(10px);
   padding: 25px;
   border-radius: 20px;
@@ -148,7 +149,7 @@ body {
 }
 
 .modal-content {
-  background: white;
+  background: linear-gradient(135deg, #f3e7ff 0%, #e6f0ff 100%);
   padding: 40px;
   border-radius: 25px;
   max-width: 900px;

@@ -12,7 +12,7 @@ export const songPool = [
     id: 1,
     songName: "Rude",
     artist: "MAGIC!",
-    albumArt: "/assets/images/song1.jpg",
+    albumArt: "/assets/images/song1.jpeg",
     audioFile: "/assets/audio/song1.mp3",
     duration: "3:45",
     lyrics: `Saturday mornin', jumped out of bed
@@ -48,7 +48,7 @@ Why you gotta be so rude?`
     id: 2,
     songName: "End of Beginning",
     artist: "Djo",
-    albumArt: "/assets/images/song2.jpg",
+    albumArt: "/assets/images/song2.png",
     audioFile: "/assets/audio/song2.mp3",
     duration: "4:12",
     lyrics: `Just one more tear to cry
@@ -74,7 +74,7 @@ But I'm alright, I swear I'm fine`
     id: 3,
     songName: "Sahiba",
     artist: "Jasleen Royal, Stebin Ben",
-    albumArt: "/assets/images/song4.jpg",
+    albumArt: "/assets/images/song4.jpeg",
     audioFile: "/assets/audio/song4.mp3",
     duration: "3:58",
     lyrics: `Tu meri sahiba, main tera khuda
@@ -118,7 +118,7 @@ Mujhko yeh gunah karne de`
     id: 5,
     songName: "Love Me Not",
     artist: "Ravyn Lenae",
-    albumArt: "/assets/images/song3.jpg",
+    albumArt: "/assets/images/song3.jpeg",
     audioFile: "/assets/audio/song3.mp3",
     duration: "3:32",
     lyrics: `Love me, love me not
@@ -161,7 +161,7 @@ Tu mera yahaan`
     id: 7,
     songName: "Subhanallah",
     artist: "Sreerama Chandra",
-    albumArt: "/assets/images/song7.jpg",
+    albumArt: "/assets/images/song7.jpeg",
     audioFile: "/assets/audio/song7.mp3",
     duration: "4:05",
     lyrics: `Subhanallah, Subhanallah
@@ -180,7 +180,7 @@ Subhanallah, Subhanallah`
     id: 8,
     songName: "Sooraj Dooba Hain",
     artist: "Arijit Singh, Aditi Singh Sharma",
-    albumArt: "/assets/images/song8.jpg",
+    albumArt: "/assets/images/song8.jpeg",
     audioFile: "/assets/audio/song8.mp3",
     duration: "3:55",
     lyrics: `Sooraj dooba hai yaaron
@@ -219,7 +219,7 @@ London thumakda`
     id: 10,
     songName: "Othaiyadi Pathayila",
     artist: "Dhibu Ninan Thomas",
-    albumArt: "/assets/images/song10.jpg",
+    albumArt: "/assets/images/song10.webp",
     audioFile: "/assets/audio/song10.mp3",
     duration: "4:15",
     lyrics: `Othaiyadi pathayila

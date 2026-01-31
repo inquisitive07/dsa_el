@@ -1,7 +1,7 @@
 /* src/components/Player.css */
 
 .player-panel {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(245, 235, 255, 0.9);
   backdrop-filter: blur(10px);
   padding: 40px;
   border-radius: 25px;
@@ -33,23 +33,22 @@
 }
 
 .song-title {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #3f2a6f;        /* deep violet for contrast */
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
   text-align: center;
 }
 
+
 .artist-name {
-  color: #666;
+  color: #4b3a6a;       /* muted purple-grey */
   font-size: 1.2rem;
   font-weight: 500;
   margin: 0;
   text-align: center;
 }
+
 
 .controls {
   display: flex;

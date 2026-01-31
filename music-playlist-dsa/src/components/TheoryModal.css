@@ -6,6 +6,7 @@
   background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
 }
 
+
 .modal-content h2 {
   color: #4A2C42;
   font-size: 2rem;
@@ -21,7 +22,7 @@
 }
 
 .ds-section {
-  background: rgba(255, 255, 255, 0.9);
+  background:#EEF1FF;
   padding: 25px;
   border-radius: 15px;
   border-left: 5px solid #667eea;
@@ -154,3 +155,5 @@
     padding: 8px;
   }
 }
+
+
