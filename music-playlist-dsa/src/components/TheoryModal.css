@@ -1,0 +1,156 @@
+/* src/components/TheoryModal.css */
+
+.theory-modal {
+  max-width: 1000px;
+  max-height: 85vh;
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+.modal-content h2 {
+  color: #4A2C42;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.theory-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.ds-section {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  border-left: 5px solid #667eea;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ds-section h3 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.ds-section h4 {
+  color: #6B4A5D;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.ds-description {
+  color: #4A2C42;
+  line-height: 1.7;
+}
+
+.ds-description p {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.ds-description ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ds-description ul li {
+  color: #4A2C42;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.ds-description ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 5px;
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.ds-description strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Comparison table styles */
+.comparison-table {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.comparison-table th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.comparison-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  color: #4A2C42;
+  font-size: 0.9rem;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison-table tr:nth-child(even) {
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.comparison-table td:first-child {
+  font-weight: 600;
+  color: #6B4A5D;
+}
+
+/* Special sections with different border colors */
+.ds-section.comparison {
+  border-left-color: #f093fb;
+}
+
+.ds-section.architecture {
+  border-left-color: #4facfe;
+}
+
+.ds-section.learning {
+  border-left-color: #43e97b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .theory-modal {
+    max-width: 95vw;
+  }
+
+  .comparison-table {
+    font-size: 0.85rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 8px;
+  }
+}

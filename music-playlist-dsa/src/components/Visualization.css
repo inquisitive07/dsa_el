@@ -1,0 +1,217 @@
+/* ================================
+   MAIN CONTAINER
+================================ */
+
+.visualization-container {
+  background: linear-gradient(135deg, #f6e7fb, #f1c6ff);
+  padding: 40px;
+  border-radius: 30px;
+  margin: 30px auto;
+  max-width: 1500px;
+  overflow-x: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.visualization-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.visualization-header h3 {
+  font-size: 2rem;
+  background: linear-gradient(90deg, #6a5acd, #d946ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.visualization-info {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  background: linear-gradient(135deg, #ff79da, #8b5cf6);
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  font-weight: bold;
+}
+
+/* ================================
+   ROW
+================================ */
+
+.dll-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 35px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
+
+/* ================================
+   HEAD / TAIL
+================================ */
+
+.side-label {
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  color: white;
+  padding: 18px 28px;
+  border-radius: 20px;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+  min-width: 120px;
+}
+
+.side-arrow {
+  font-size: 1.8rem;
+  margin-top: 6px;
+}
+
+/* ================================
+   NODES
+================================ */
+
+.nodes-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-shrink: 0;
+}
+
+.dll-node {
+  background: white;
+  padding: 22px;
+  min-width: 220px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 3px solid transparent;
+  transition: 0.3s;
+  flex-shrink: 0;
+}
+
+.dll-node.current {
+  background: linear-gradient(135deg, #38bdf8, #22d3ee);
+  color: white;
+
+  transform: scale(1.12);
+
+  box-shadow:
+    0 0 18px rgba(56, 189, 248, 0.9),
+    0 0 40px rgba(34, 211, 238, 0.9),
+    0 0 70px rgba(125, 211, 252, 0.85);
+}
+
+
+.node-id {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.node-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 6px 0;
+}
+
+.node-artist {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.node-pointers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 0.8rem;
+}
+
+/* ================================
+   CONNECTORS
+================================ */
+
+.connector {
+  font-size: 2.4rem;
+  color: #7c3aed;
+  animation: pulse 1.6s infinite;
+  flex-shrink: 0;
+}
+
+/* ================================
+   CIRCULAR BOX
+================================ */
+
+.circular-box {
+  margin-top: 40px;
+  padding: 20px 30px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #60a5fa, #22d3ee);
+  text-align: center;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ================================
+   EMPTY
+================================ */
+
+.empty-visualization {
+  text-align: center;
+  padding: 60px;
+  font-style: italic;
+}
+
+/* ================================
+   ANIMATION
+================================ */
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .dll-row {
+    gap: 20px;
+  }
+  
+  .dll-node {
+    min-width: 180px;
+    padding: 18px;
+  }
+  
+  .side-label {
+    padding: 14px 20px;
+    min-width: 100px;
+  }
+  
+  .connector {
+    font-size: 2rem;
+  }
+}

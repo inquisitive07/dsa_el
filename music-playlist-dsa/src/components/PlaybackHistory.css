@@ -1,0 +1,116 @@
+/* src/components/PlaybackHistory.css */
+
+.playback-history-panel {
+  background: rgba(232, 180, 212, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.playback-history-panel h3 {
+  color: #4A2C42;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 12px 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(-5px);
+}
+
+.history-time {
+  background: rgba(139, 90, 125, 0.2);
+  color: #8B5A7D;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-song {
+  font-weight: 600;
+  color: #4A2C42;
+  margin-bottom: 3px;
+}
+
+.history-artist {
+  font-size: 0.85rem;
+  color: #6B4A5D;
+  opacity: 0.8;
+}
+
+.source-badge {
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.source-navigation {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.source-selection {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196F3;
+}
+
+.source-queue {
+  background: rgba(255, 152, 0, 0.2);
+  color: #FF9800;
+}
+
+.history-explanation {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #4A2C42;
+}
+
+.history-explanation strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #8B5A7D;
+}
+
+.history-explanation ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.history-explanation li {
+  margin: 4px 0;
+}

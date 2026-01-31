@@ -1,0 +1,65 @@
+/* src/components/Lyrics.css */
+
+.lyrics-panel {
+  background: rgba(232, 180, 212, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.lyrics-panel h2 {
+  color: #4A2C42;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 1.8rem;
+}
+
+.lyrics-content {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 25px;
+  border-radius: 15px;
+  line-height: 1.8;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.lyrics-content p {
+  color: #4A2C42;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.lyrics-content p:empty {
+  margin-bottom: 20px;
+}
+
+.no-lyrics {
+  color: #6B4A5D;
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+}
+
+/* Custom scrollbar for lyrics */
+.lyrics-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lyrics-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.lyrics-content::-webkit-scrollbar-thumb {
+  background: rgba(139, 90, 125, 0.5);
+  border-radius: 10px;
+}
+
+.lyrics-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 90, 125, 0.7);
+}
