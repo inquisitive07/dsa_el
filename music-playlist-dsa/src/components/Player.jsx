@@ -1,6 +1,7 @@
 // src/components/Player.jsx
 
 import React, { useState, useEffect } from 'react';
+import PlaybackSpeed from './PlaybackSpeed';
 import './Player.css';
 
 const Player = ({ 
@@ -119,9 +120,9 @@ const Player = ({
         <span className="time-label">{formatTime(duration)}</span>
       </div>
 
-      <button className="dll-view-btn">
-        Doubly Linked List View
-      </button>
+      <div className="playback-speed-wrapper">
+        <PlaybackSpeed audioRef={audioRef} />
+      </div>
     </div>
   );
 };

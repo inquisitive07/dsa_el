@@ -5,7 +5,7 @@ import DoublyLinkedList from './dataStructures/DoublyLinkedList';
 import Stack from './dataStructures/Stack';
 import Queue from './dataStructures/Queue';
 import HashMap from './dataStructures/HashMap';
-import { getInitialPlaylist } from './utils/songData';
+import { getInitialPlaylist, songPool } from './utils/songData';
 
 // Components - all in the same components folder
 import Playlist from './components/Playlist';
@@ -30,6 +30,8 @@ function App() {
 
   const [hashMap] = useState(() => {
     const map = new HashMap();
+    // Set the song pool reference for searching
+    map.setSongPool(songPool);
     return map;
   });
 
@@ -48,12 +50,16 @@ function App() {
   // Build hash map on initial load
   useEffect(() => {
     hashMap.rebuild(playlist);
+    // Make sure song pool is set
+    hashMap.setSongPool(songPool);
   }, [hashMap, playlist]);
 
   // Update component when playlist changes
   const refreshPlaylist = () => {
     setForceUpdate(prev => prev + 1);
     hashMap.rebuild(playlist);
+    // Ensure song pool reference is maintained
+    hashMap.setSongPool(songPool);
   };
 
   // Handle play/pause
@@ -191,6 +197,34 @@ function App() {
     setShowAddSongModal(false);
   };
 
+  // Handle adding song from pool (via search)
+  const handleAddSongFromPool = (songData) => {
+    // Check if song already exists in playlist
+    if (hashMap.has(songData.songName)) {
+      // If it exists, just play it
+      const existingNode = hashMap.get(songData.songName);
+      setCurrentNode(existingNode);
+      setIsPlaying(true);
+      return;
+    }
+
+    // Add the song to playlist
+    playlist.addSong(songData);
+    const newNode = playlist.getTail();
+    hashMap.set(songData.songName, newNode);
+    
+    // Set as current and play
+    setCurrentNode(newNode);
+    playbackHistory.push({
+      node: newNode,
+      timestamp: new Date().toISOString(),
+      source: 'pool-search'
+    });
+    
+    refreshPlaylist();
+    setIsPlaying(true);
+  };
+
   // Handle "Play Next" - add song to queue
   const handlePlayNext = (songId) => {
     const node = playlist.getNodeById(songId);
@@ -204,10 +238,11 @@ function App() {
     }
   };
 
-  // Handle search
+  // Handle search - now searches both playlist and pool
   const handleSearch = (searchTerm) => {
     if (!searchTerm.trim()) return;
 
+    // First try exact match in playlist
     const exactMatch = hashMap.get(searchTerm);
     if (exactMatch) {
       setCurrentNode(exactMatch);
@@ -215,13 +250,23 @@ function App() {
       return;
     }
 
-    const results = hashMap.search(searchTerm);
-    if (results.length > 0) {
-      setCurrentNode(results[0]);
+    // Then search all locations
+    const results = hashMap.searchAll(searchTerm);
+    
+    // Prioritize playlist results
+    if (results.playlist.length > 0) {
+      setCurrentNode(results.playlist[0]);
       setIsPlaying(true);
-    } else {
-      alert("No songs found!");
+      return;
     }
+    
+    // If not in playlist but found in pool, add and play
+    if (results.pool.length > 0) {
+      handleAddSongFromPool(results.pool[0]);
+      return;
+    }
+
+    alert("No songs found!");
   };
 
   // Auto play next song when current ends
@@ -267,7 +312,11 @@ function App() {
         </div>
       </header>
 
-      <SearchBar onSearch={handleSearch} hashMap={hashMap} />
+      <SearchBar 
+        onSearch={handleSearch} 
+        hashMap={hashMap}
+        onAddSongFromPool={handleAddSongFromPool}
+      />
 
       <div className="main-content">
         <Playlist
@@ -336,6 +385,10 @@ function App() {
         <div className="ds-stat">
           <span className="ds-label">Hash Map:</span>
           <span className="ds-value">{hashMap.size()} indexed</span>
+        </div>
+        <div className="ds-stat">
+          <span className="ds-label">Song Pool:</span>
+          <span className="ds-value">{songPool.length} total songs</span>
         </div>
       </div>
 

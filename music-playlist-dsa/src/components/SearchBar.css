@@ -60,8 +60,49 @@
   border-radius: 15px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+}
+
+.suggestions-section {
+  padding: 10px 0;
+}
+
+.suggestions-section:not(:last-child) {
+  border-bottom: 2px solid rgba(139, 90, 125, 0.2);
+}
+
+.suggestions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(139, 90, 125, 0.05);
+  margin-bottom: 5px;
+}
+
+.suggestions-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #4A2C42;
+}
+
+.suggestions-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+}
+
+.playlist-badge {
+  background: linear-gradient(135deg, #8B5A7D 0%, #6B4A5D 100%);
+}
+
+.pool-badge {
+  background: linear-gradient(135deg, #5A7D8B 0%, #4A5D6B 100%);
 }
 
 .suggestion-item {
@@ -69,6 +110,9 @@
   cursor: pointer;
   border-bottom: 1px solid rgba(139, 90, 125, 0.1);
   transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .suggestion-item:hover {
@@ -77,6 +121,18 @@
 
 .suggestion-item:last-child {
   border-bottom: none;
+}
+
+.playlist-item:hover {
+  background: rgba(139, 90, 125, 0.12);
+}
+
+.pool-item:hover {
+  background: rgba(90, 125, 139, 0.12);
+}
+
+.suggestion-content {
+  flex: 1;
 }
 
 .suggestion-name {
@@ -89,4 +145,42 @@
   font-size: 0.9rem;
   color: #6B4A5D;
   opacity: 0.8;
+}
+
+.suggestion-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8B5A7D;
+  padding: 6px 12px;
+  background: rgba(139, 90, 125, 0.1);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.pool-item .suggestion-action {
+  color: #5A7D8B;
+  background: rgba(90, 125, 139, 0.1);
+}
+
+.suggestion-item:hover .suggestion-action {
+  transform: translateX(3px);
+}
+
+/* Scrollbar styling */
+.suggestions-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+  background: rgba(139, 90, 125, 0.05);
+  border-radius: 0 15px 15px 0;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(139, 90, 125, 0.3);
+  border-radius: 4px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 90, 125, 0.5);
 }
